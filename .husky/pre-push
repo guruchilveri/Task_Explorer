@@ -1,0 +1,17 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
+
+# Allow 'develop' branch to push without validation
+if [[ "$BRANCH_NAME" == "develop" ]]; then
+  echo "✅ Skipping branch name validation for 'develop' branch."
+  exit 0
+fi
+
+if [[ ! $BRANCH_NAME =~ ^(feature|bugfix|hotfix|release|task)/[a-z0-9_-]+$ ]]; then
+  echo "❌ Invalid branch name: $BRANCH_NAME"
+  echo "✅ Allowed patterns: feature/*, bugfix/*, hotfix/*, release/*, task/*"
+  exit 1
+fi
+
