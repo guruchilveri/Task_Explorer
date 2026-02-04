@@ -1,3 +1,1432 @@
+
+# 100 Must-Know React Native Interview Questions in 2026
+
+<br>
+
+## 1. What is _React Native_ and how does it differ from _React_?
+
+**React Native** extends the award-winning React library, making it possible to build **native mobile applications** using familiar web technologies.
+
+### Differences from React
+
+- **Platform Scope**: React is tailored for web development, while React Native is exclusive to building iOS and Android applications.
+- **Rendering Engine**: React uses the browser's DOM for visualization, whereas React Native achieves a parallel outcome through native platform rendering.
+- **Component Style**: While most of the component-building strategies and lifecycles between React and React Native are analogous, the **controls manage** the considerable difference in rendering and event handling. For instance, React uses simple buttons and divs, whereas React Native leverages platform-compliant components like `Button`, `View`, and `Text`.
+- **Integration with APIs**: While React targets web APIs, React Native consolidates connectivity with native mobile device features and APIs. This extension makes it feasible to tap into mechanism such as Camera, GPS, and Fingerprint sensors.
+
+### Code Example: React vs React Native
+
+Here is the React code:
+
+```jsx
+import React, { useState } from 'react';
+
+const MyComponent = () => {
+  const [count, setCount] = useState(0);
+  
+  return (
+    <button onClick={() => setCount(count+1)}>
+      Clicked {count} times
+    </button>
+  );
+};
+```
+
+And here is the equivalent React Native code:
+
+```jsx
+import React, { useState } from 'react';
+import { View, Text, Button } from 'react-native';
+
+const MyComponent = () => {
+  const [count, setCount] = useState(0);
+  
+  return (
+    <View>
+      <Button title={`Clicked ${count} times`} onPress={() => setCount(count+1)} />
+    </View>
+  );
+};
+```
+<br>
+
+## 2. Can you explain the concept of "_Learn once, write anywhere_" in the context of _React Native_?
+
+The main idea of "Learn Once, Write Anywhere" in the context of **React Native** is "**code reusability**". Libraries and components written in **React** can be utilized across multiple platforms, while platform-specific code sections adapt as needed.
+
+This approach offers **significant efficiency** in both development and maintenance as it ensures **consistent behavior** across platforms.
+
+### Key Concepts
+
+- **Abstraction**: Developers can focus on business logic without being overly concerned about low-level platform intricacies.
+- **Adaptation**: Platform-specific visual and user experience elements can be incorporated when necessary.
+- **Reusable Components**: Leveraging shared components across platforms reduces redundancy and simplifies code maintenance.
+
+### Core Mechanisms
+
+- **Platform Selectors**: Logical checks based on the running platform, such as `Platform.OS === 'ios'`, provide branching capabilities.
+
+- **Platform-related Directories**: Platform-specific files can be organized into dedicated directories (e.g., `ios` and `android`), ensuring distinct settings and behaviors.
+
+- **Platform-specific Extensions**: File naming conventions utilizing platform-specific extensions (e.g., `filename.ios.js`) enable tailored module imports.
+
+- **Conditional Styles**: Styles imported or applied differently on distinct platforms ensure visual consistency.
+
+### Application Scenarios
+
+- **Authenticators**: Different authentication workflows often exist for iOS and Android. The shared codebase can adapt gracefully using platform-specific file imports and methods.
+
+- **UI/UX Adaptations**: When the look and feel of certain components deviate across platforms, such as navigational elements, shared business logic with platform-specific UI components is key.
+  
+- **Push Notifications**: Configurations and handling strategies for push notifications might necessitate platform-specific implementations.
+
+- **Permissions**: The way permissions like location or camera are requested and handled can differ between **iOS** and **Android**, requiring adaptation within the common React Native codebase.
+
+### Caveats and Best Practices
+
+- **Balance**: Strive for a harmonious blend of shared and platform-specific code, avoiding gridlock due to over customization.
+
+- **Aim at Consistency**: Use platform-agnostic libraries as much as possible to ensure a uniform look and feel.
+
+- **Maintenance Awareness**: Background differences in platform conventions, potential updates, and evolving third-party libraries underscore the need for periodic reviews of platform-specific modules.
+<br>
+
+## 3. How do you create a basic _React Native application_?
+
+Creating a basic **React Native** application involves a number of steps, such as setting up your development environment, installing required software, and running a boilerplate application.
+
+### Setting Up Your Environment
+
+First, ensure **Node.js** and **npm** are installed on your computer. To check for existing installations:
+- For Node.js, use `node -v` or `npm -v`. If not installed, get the latest version from [Node.js website](https://nodejs.org).
+- For npm, use `npm -v`.
+
+### Setting Up Expo
+
+**Expo** offers a quicker setup for a lightweight app. However, for large or complex applications, direct use of React Native might be more suitable. To set up Expo, install it globally via npm:
+
+```sh
+npm install -g expo-cli
+```
+
+### Creating Your Project
+
+#### With Expo (Recommended for Beginners)
+
+1. Choose a Development Tool: You can select **Expo Go**, **simulator/emulator**, or **physical device** for testing.
+2. Create a New Project: Use the `expo init` command and choose a template. Common choices include types like "blank," "tabs," and "from existing git repo."
+3. Test Your Setup: Run "hello world" with `expo start`.
+
+#### Without Expo
+
+If you're not using Expo, create a new project with npm or Yarn:
+
+**With npm**:
+
+```sh
+npx react-native init MyApp
+cd MyApp
+npx react-native run-android
+# OR
+npx react-native run-ios
+```
+
+**With Yarn**:
+
+```sh
+npx react-native init MyApp
+cd MyApp
+yarn android
+# OR
+yarn ios
+```
+
+### Looking at Your Project
+
+1. **app.json**: This file holds configuration settings.
+2. **package.json** and **yarn.lock** (if using Yarn): These files manage project dependencies.
+3. **node_modules/**: This directory stores your project's dependencies. This directory and its contents should never be pushed to your version control system.
+
+### App Entry Point
+
+The default path for the app's entry point and main code is:
+
+- For Android: `index.js` or `App.js` (generated by Expo)
+- For iOS: `AppDelegate.m` and `main.m`
+
+### Directory Structure
+
+The initial setup often includes these directories:
+
+- **android/**: Contains the Android project.
+- **ios/**: Contains the iOS project.
+- **node_modules/**: Modules fetched and managed via npm or Yarn.
+- **package.json**: Lists the app's metadata, as well as its dependencies.
+<br>
+
+## 4. What are _components_ in _React Native_?
+
+In React Native, **components** are building blocks that encapsulate UI and logic, making app development modular and efficient. There are two types of components: **Base Components** and **Custom Components**.
+
+### Base Components
+
+These are core UI elements provided by React Native, directly corresponding to native views or controls. They are optimized for performance and interactive consistency.
+
+- **Text**: Displays readable text.
+- **View**: A container that supports layout with styles, such as flexbox.
+- **Image**: Displays images.
+
+### Custom Components
+
+These are created by developers and can be composed of both base and custom components, offering a higher level of abstraction. Custom components are reusable, promote a consistent design, and streamline UI updates.
+
+#### Text\_Example.jsx
+
+Here is the React Native code:
+
+```jsx
+import React from 'react';
+import { Text } from 'react-native';
+
+const CustomText = ({ children }) => (
+  <Text style={{ fontFamily: 'Roboto-Bold', color: 'darkslategray' }}>{children}</Text>
+);
+
+export default CustomText;
+```
+
+### Component Nesting and Tree Structure
+
+**React Native** applications are tree-structured with multiple components nested within one another. This composition allows for consistent and quick alterations across the app. Whether it's a `Text`, `View`, or custom component, each is a node in the component tree, visually impacting the app. Devs split the UI into smaller, self-contained parts to simplify maintenance and testing.
+
+### Core Principles of Building Components
+
+1. **Reusability**: Both base and custom components are designed for reuse in different parts of the application, further expanding the idea of modular development.
+2. **Autonomy**: Each component should be self-sufficient, not heavily reliant on external data or functionality. This promotes easier maintenance and testing.
+3. **UI Focus**: Components should either cater to UI or some specific functionality, but never both. This separation ensures a better code structure and maintainability.
+4. **Loose Prop Types**: Custom components should generally avoid having too many mandatory props to allow for flexibility in their usage. They can, instead, rely on sensible defaults.
+5. **Integrative Mindset**: When designing components, developers must have a holistic approach, keeping in mind how everything will come together in the UI.
+
+### Managing Component State
+
+State management in components revolves around keeping track of changing data within that component. It's common in interactive UIs and involves data binding and conditional rendering. In React Native, components invoke a `useState` hook to integrate reactive state management.
+
+#### CustomText with State
+
+Here is the modified `CustomText` component:
+
+```jsx
+import React, { useState } from 'react';
+import { Text, TouchableOpacity } from 'react-native';
+
+const CustomText = ({ children }) => {
+  const [isBold, setIsBold] = useState(false);
+
+  const toggleBold = () => setIsBold(prevState => !prevState);
+
+  return (
+    <TouchableOpacity onPress={toggleBold}>
+      <Text style={{ fontFamily: isBold ? 'Roboto-Bold' : 'Roboto-Regular', color: 'darkslategray' }}>{children}</Text>
+    </TouchableOpacity>
+  );
+};
+
+export default CustomText;
+```
+<br>
+
+## 5. Explain the purpose of the `render()` function in a _React Native component_.
+
+The `render()` function, which is **mandatory** for all **React** and **React Native** components, is a gateway for JSX, receiving, processing, and returning the JSX layout. This function is like a workbench where the developer prepares the visual representation.
+
+### JSX: Visual Blueprint
+
+**JSX** is HTML-like markup within JavaScript that provides a structured description of the visual layout. It's like a **visual blueprint** for the component.
+
+The `render()` function leverages this blueprint, converting the JSX elements into the actual visual UI components.
+
+Here's a simple example:
+
+```jsx
+// JSX Blueprint
+let myJSX = (
+  <View>
+    <Text>Hello, World!</Text>
+  </View>
+);
+
+// 'render()' Function
+let render = () => {
+  let uiComponent = (
+    <View>
+      <Text>Hello, World!</Text>
+    </View>
+  );
+
+  // Visual representation
+  return uiComponent;
+};
+```
+
+### Code Maintenance
+
+Having the `render()` function separates **declarative structure** from actual evaluatives and provides a clear workflow, making the code **easier to maintain** and understand.
+
+### Virtual DOM Interaction
+
+React Native employs a **virtual DOM** to optimize and streamline UI updates. When the `state` or `props` of a component change, `render()` is called to ensure the **virtual DOM** is in sync. The virtual DOM then identifies and applies only the necessary updates to the actual UI, reducing redundancy and rendering time.
+
+### Performance Optimization: Conditional Rendering
+
+Conditional rendering, controlled by **if-else**, is facilitated within the `render()` method, allowing for context-aware UI updates that ensure **sensible resource** and display utilization.
+
+### Side-Effects Handling: Lifecycle Methods
+
+The `render()` method is just one of several **lifecycle methods**. Accurate handling of these methods through `render()` and controlled component updates ensures proper **data-fetching** and **side-effect management**.
+
+### UI Interactivity: Integrating JSX with Methods
+
+JSX elements link visual representation with the logic behind user interactions—this is powered by methods like `onPress`, which, again, correspond to changes in `state` or `prop` triggers, leading back to, you guessed it, the trustworthy `render()` function.
+
+### Code Example: Using JSX and `render()`
+
+Here is the React Native code:
+
+```jsx
+import React, { Component } from 'react';
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+
+class MyComponent extends Component {
+  state = {
+    data: ['Item 1', 'Item 2', 'Item 3'],
+    showList: true,
+  };
+
+  renderList() {
+    if (!this.state.showList) {
+      return null;
+    }
+
+    return (
+      <ScrollView>
+        {this.state.data.map((item, index) => (
+          <Text key={index}>{item}</Text>
+        ))}
+      </ScrollView>
+    );
+  }
+
+  toggleList = () => {
+    this.setState({ showList: !this.state.showList });
+  };
+
+  render() {
+    return (
+      <View>
+        <TouchableOpacity onPress={this.toggleList}>
+          <Text>{this.state.showList ? 'Hide' : 'Show'} List</Text>
+        </TouchableOpacity>
+        {this.renderList()}
+      </View>
+    );
+  }
+}
+```
+<br>
+
+## 6. What is _JSX_ and how is it used in _React Native_?
+
+**JSX** is a syntax extension for JavaScript, especially popular in React and React Native for expressing your UI components concisely.
+
+It effectively lets you write **XML-style** code directly in your JavaScript files, making component definition and nesting visually intuitive.
+
+### Key JSX Features in React Native
+
+- **Component Definition**: Use `.JSX` to visually group styling and component structure.
+
+```jsx
+const MyComponent = () => {
+  return (
+    <View style={styles.container}>
+      <Text>Hello, React Native!</Text>
+    </View>
+  );
+};
+```
+
+- **Regular JS** (No JSX):
+```javascript
+const MyComponent = () => {
+  return React.createElement(View, { style: styles.container }, React.createElement(Text, null, "Hello, React Native!"));
+};
+```
+
+- **Component Nesting**: Implement parent-child relationships via clear indentation in your JSX tree, enhancing visual hierarchy.
+
+```jsx
+return (
+  <View>
+    <Text>Parent</Text>
+    <View>
+      <Text>Child 1</Text>
+      <Text>Child 2</Text>
+    </View>
+  </View>
+);
+```
+
+- **Event Handling**: Attach event listeners to UI events easily within the JSX structure.
+
+```jsx
+<TouchableOpacity onPress={handlePress}>
+  <Text style={styles.buttonText}>Press Me</Text>
+</TouchableOpacity>
+```
+
+- **Equivalent Without JSX**:
+```javascript
+React.createElement(TouchableOpacity, { onPress: handlePress }, React.createElement(Text, { style: styles.buttonText }, "Press Me"));
+```
+
+
+### JSX Transpiling
+
+The **Babel** transpiler lies at the heart of JSX functionality, converting JSX into regular JavaScript for compatibility with web and mobile platforms.
+
+For instance, when you author this **React Native** code:
+```jsx
+return <View style={styles.container}><Text>Hello, React Native!</Text></View>;
+```
+
+Babel transpiles it into the following JavaScript:
+```javascript
+return React.createElement(View, { style: styles.container }, React.createElement(Text, null, "Hello, React Native!"));
+```
+<br>
+
+## 7. Can you list some of the core components in _React Native_?
+
+**React Native** has several fundamental components.
+
+### Core Components
+
+1. **View**: The basic container that supports layout with Flexbox.
+2. **Text**: For displaying text.
+3. **Image**: For displaying images either from the local file system or the network.
+
+### Specialized Components
+
+- **ScrollView**: For displaying a scrollable list of components.
+- **Listview (deprecated)**: A high-performance, cross-platform list view.
+- **TextInput**: An input component with optional prompts, as well as a variety of keyboard types, enabling text input.
+
+### User Interface
+
+- **Button**: A UI component that enables a user to interact with the application.
+- **Picker**: A dropdown list that displays a picker interface.
+
+### Basic Functionality Components
+
+- **ActivityIndicator**: Displays a rotating circle, indicating that the app is busy performing an operation.
+- **Slider**: Lets the user select a value by sliding the thumb on the bar.
+- **Switch**: Used for the on/off state.
+
+### iOS and Android Platform Integration
+
+- **SegmentedControlIOS**: Renders a UISegmentedControl on iOS.
+- **TabBarIOS**: Renders a tab bar with tabs that can be swiped.
+  - `TabBarIOS.Item`: Represents an item in a `TabBarIOS` component.
+- **ToolbarAndroid**: A toolbar for use with the `CoordinatorLayout`, offering additional features, such as controls for children of the Views.
+  - `ToolbarAndroid`: Represents a standard Android toolbar.
+
+### List Views
+
+- **FlatList**: A core virtualized list component supporting both vertical and horizontal scrolls. It's memory-efficient and only renders the elements on-screen. It also supports dynamic loading.
+- **SectionList**: Much like `FlatList`, but also allows you to section your data.
+
+### Other Components
+
+- **ActionSheetIOS**: Provides a pre-designed action sheet to display the list of options.
+- **Alert**: For displaying an alert dialog.
+- **AncestryManager**: Manages the relationships of Views. Developed initially for aiding the animation framework.
+- **Animated**: A consolidated toolset to perform animations.
+- **Appearance**: Gains insights into the unique appearance traits of respective iOS components if the device is running on iOS 13 or later.
+- **DevSettings**: Owns a group of system settings tailored to the development phase.
+- **Dimensions**: Assists in determining the dimensions of the viewport.
+- **DormantStack**: Regulates the arrangement of Views. These views remain dormant and stop updating when they are not visible.
+- **DrawerLayoutAndroid**: A unique drawer layout design developed for Android.
+- **InputAccessoryView**: Accommodates customized views for input access.
+- **KeyboardAvoidingView**: Augments the scalability of the UI in circumstances like keyboard being opened.
+- **MaskedViewIOS**: Allows developers to create custom views with a specified shape.
+- **Picker**: A seeming replica of the `Picker` that shows a native picker interface after a click.
+- **Platform**: A utility to single out the present platform.
+- **ProgressViewIOS**: For when one needs to display a standard iOS progress bar.
+- **RefreshControl**: A tool used to integrate swipe-down-the-screen functionalities.
+- **SafeAreaView**: A safety net component for iOS, regulating the area displays that would have compromised otherwise.
+- **StatusBar**: A utility to handle the app's status bar control.
+- **StyleSheet**: A collection of type-safe approaches to the integration of styles in your app.
+- **TouchableHighlight**: A view that illustrates a sub-view while being tapped.
+- **TouchableNativeFeedback**: An optimized version of the `TouchableHighlight` toward Android platforms.
+- **TouchableOpacity**: Reduces the opacity of the view for conveying the touch response.
+- **TouchableWithoutFeedback**: A view reacting to touches and signals exclusively without providing any feedback.
+- **Vibration**: Triggers the device's vibration mechanism.
+- **ViewPropTypes**: Manages the prop-types for the `View` component.
+<br>
+
+## 8. How do you handle _state management_ in _React Native_?
+
+**State management** in **React Native** involves tracking and updating the state of components.
+
+### Local State Management
+
+- **State Declaration**: Use `useState` from the React library.
+  
+  ```jsx
+  import React, { useState } from 'react';
+
+  const MyComponent = () => {
+    const [count, setCount] = useState(0);
+  };
+  ```
+
+- **State Update**: Invoke the state-modifying function (in this case, `setCount`).
+
+### Global State Management
+
+- **State Declaration**: Utilize the "Context" API via `Provider` to make the state globally available.
+
+- **Selecting**: Components can subscribe to specific parts of the global state using `useContext`.
+
+- **Updating**: To modify global state, make use of a "reducer" or actions that the `dispatch` function sends to the state management system.
+
+  ```jsx
+  import { useReducer, useContext } from 'react';
+
+  // Define an action
+  const INCREMENT = 'increment';
+
+  // Define a reducer
+  const reducer = (state, action) => {
+    switch (action.type) {
+      case INCREMENT:
+        return { ...state, count: state.count + 1 };
+      default:
+        return state;
+    }
+  };
+
+  // Within component
+  const MyComponent = () => {
+    const { state, dispatch } = useContext(MyContext);
+    dispatch({ type: INCREMENT });
+  };
+  ```
+
+### External State Management
+
+- **State Declaration**: Use external libraries like **Redux**.
+
+- **Selecting**: Components can subscribe to parts of the global state via `connect` or `useSelector`.
+
+- **Updating**: Trigger changes using `dispatch` or action creators.
+
+### Shared State Management
+
+- **State Declaration**: Also facilitated by the "Context" API or libraries like **Redux**.
+
+- **Updating**: Components interact with the shared state as per the framework's methodology, be it by using `dispatch` in **Redux** or other means.
+
+- **Keeping Components in Sync**: This is automatically handled by the framework.
+
+### Best Practices
+
+- **Granularity of State**: Prefer local state whenever state is limited to a single component. Global and external state management should be reserved for state shared across multiple components.
+
+- **Consistency**: Adhere to a consistent state management approach throughout the application to minimize complexity.
+
+- **Minimizing Storage**: Avoid duplicative storage of state where local state can serve the purpose.
+<br>
+
+## 9. What are _props_ in _React Native_ and how are they used?
+
+**Props** (short for "properties") enable unidirectional data flow in React and are essential for building reusable **React Native components**.
+
+Props provide a mechanism for passing data from a parent to a child, allowing for customization and dynamic behavior. They are immutable and help to keep components self-contained, making it easier to manage and maintain a React Native application.
+
+### Key Concepts
+
+- **Unidirectional Data Flow**: Props serve as a one-way street for data, originating in a parent component and flowing down to child components.
+- **Read-Only**: Once defined, props are not meant to be modified by the receiving component.
+- **Default Values**: You can define default values for props to ensure smooth handling.
+
+### Guiding Principles
+
+- **Single Source of Truth**: Emphasizes a centralized role for data, making it clearer to identify the information's origination point.
+- **Separation of Concerns**: By restricting the scope in which components can influence one another, application logic becomes more compartmentalized and easier to manage.
+
+### Prop Types
+
+- **Required Props**: Ensures that specific props are provided. If a required prop is missing, React will issue a warning (in development mode).
+- **Data Types**: Prop types can be specialized (e.g., string, number, or function) to enforce type coherency, contributing to better code reliability and predictability.
+- **Shape and Arrays**: For more complex data structures, such as objects with specific shapes and arrays, you can define even more intricate prop type requirements.
+
+### Code Example: Simple "Weather Card" Component
+
+```jsx
+// WeatherCard.js
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Text, View, Image } from 'react-native';
+
+const WeatherCard = ({ temperature, humidity, icon }) => {
+  return (
+    <View>
+      <Text>{`Temperature: ${temperature}`}</Text>
+      <Text>{`Humidity: ${humidity}`}</Text>
+      <Image source={icon} />
+    </View>
+  );
+};
+
+WeatherCard.propTypes = {
+  temperature: PropTypes.number.isRequired,
+  humidity: PropTypes.number.isRequired,
+  icon: PropTypes.shape({
+    uri: PropTypes.string,
+  }).isRequired,
+};
+
+export default WeatherCard;
+```
+
+In the above example, `WeatherCard` accepts three props: `temperature`, `humidity`, and `icon`. Each of these props is essential for the card to accurately depict current weather conditions. Each **prop has a designated prop type**, ensuring that the received values match specific criteria.
+<br>
+
+## 10. What is the significance of the _Flexbox_ layout in _React Native_?
+
+Let's look at the unique implementations and advantages of **Flexbox** within **React Native**.
+
+### Components Designed for Flexbox
+
+React Native provides specific components empowered by Flexbox, including:
+
+1. **Container Components**: These are Views and Touchables that house inner elements being placed using Flexbox.
+
+2. **Content Components**: These are core layout components that handle the arrangement of inner items. Examples include the Text component.
+
+### Core Flexbox Components
+
+1. **View**: The foundation of Flexbox layout in React Native
+
+2. **Text**: A specialized View primarily for text-related elements that supports Flexbox
+
+3. **Image**: A Flexbox-capable View for image elements
+
+4. **ScrollView**: A container for components that are larger than its size, offering various scrolling methods. It uses Flexbox to arrange these scrollable components.
+
+5. **FlatList** and **SectionList**: These specialized components efficiently render large lists and areas as per the screen's dimensions, leveraging the innate performance of the native interface.
+
+6. **VirtualizedList**: A low-level, high-performance list. Both FlatList and SectionList are built on top of VirtualizedList.
+
+### Flexbox Properties in React Native
+
+1. **Direction**: Establishes the principal axis of the layout. Options are `row` and `column`, with the latter being the default.
+
+2. **Alignment**: Determines the position of items along the secondary axis. Common settings include `flex-start`, `center`, and `flex-end`. The setting `stretch` is also available, which extends the components to fill the empty space.
+
+3. **Order**: Flexbox allows for reordering of elements. This property defines the display order, **with the default being 0**. 
+
+4. **Proportional Sizing**: Rather than specifying explicit dimensions, items can be sized proportionally to the remaining space, making the layout adaptable to various screen sizes.
+
+5. **Gutters**: Flexbox in React Native can handle gutters between items effortlessly.
+
+### Code Example: Flex Direction
+
+Here is the JavaScript code:
+
+```javascript
+export default function App() {
+  return (
+    <View style={styles.container}>
+      <View style={styles.box} />
+      <View style={styles.box} />
+      <View style={styles.box} />
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+  },
+  box: {
+    width: 50,
+    height: 50,
+    backgroundColor: 'lightgrey',
+  },
+});
+```
+
+In this example, the three boxes are displayed side by side due to `flexDirection: 'row'`. Their alignment is managed by `justifyContent` and `alignItems`.
+
+React Native primarily focuses on the core concepts and properties of Flexbox, offering a simplified and intuitive experience for developers.
+<br>
+
+## 11. How do you debug a _React Native application_?
+
+Debugging in React Native involves both traditional debugging methods and those specific to the platform. Here are the strategies and tools to streamline the debugging process.
+
+### Debugging Strategies
+
+- **Use DevTools**: These browser-based tools let you inspect and modify the DOM, examine network activity, and monitor console logs, among other features.
+
+- **Leverage Emulators/Simulators**: Virtual device environments can be invaluable for replicating and debugging issues across a range of device types.
+
+- **Physical Testing**: Testing on actual devices is vital for identifying device-specific bugs. Use USB debugging for a direct connection to the development machine.
+
+- **Watch Out for Undefined Behaviors**: JavaScript doesn't throw errors when accessing properties or methods of `null` or `undefined`. Check for unexpected `undefined` values using defensive patterns, like short-circuit evaluation or optional chaining.
+
+- **Separate and Simplify Issues**: If you're dealing with a complex issue, break it down into bite-sized problems. Simplify the problem domain to understand the root cause. Use binary search principles to isolate issues methodically.
+
+- **Test Isolation**: Confirm whether the bug is reproducible in a fresh environment. Temporarily remove certain components or functionality to see how it affects the bug.
+
+- **Incremental Building**: After making a change, observe if the problem resolves or worsens.
+
+- **Versatile Console Logging**: Consider using `console.assert` for conditional logs, `console.info` for informational messages, `console.warn` for potential issues, and `console.error` for errors.
+
+- **Component-Specific Debugging**: Use `ReactDOM.findDOMNode` to fetch a component's DOM representation.
+
+- **Debug in Multiple Environments**: It might be helpful to test your app in both dev and production modes.
+
+### Tools for Debugging
+
+1. **React DevTools**: Browser extensions like Chrome DevTools or standalone applications facilitate inspection of React component trees, context, and hooks.
+
+2. **Flipper**: This is a debugging tool for mobile apps on iOS, Android, and React Native. It offers a pluggable architecture that allows developers to build custom integrations.
+
+3. **Expo**: The `expo-dev-client` package provides a powerful testing environment. It's useful when working in managed Expo projects.
+
+4. **Redux DevTools**: For an app integrated with Redux, this tool offers essential features such as time-travel debugging.
+
+5. **Network Inspectors**: Both Chrome DevTools and Safari's Web Inspector offer detailed network activity insights.
+
+6. **Profiling and Performance Tools**: Use React DevTools for profiling and diving deep into performance metrics.
+
+7. **Remote Debugging**: Chrome and Safari offer remote debugging tools. For example, with Chrome, you can inspect the WebView used by your app.
+
+8. **React Native Debugger**: This application bundles Chrome DevTools, the React DevTools, and a JavaScript VM.
+
+9. **Code Linters**: Integrate linters like ESLint or TypeScript with your editor or development environment to catch potential source code issues.
+
+10. **HMR (Hot Module Replacement)**: HMR ensures that your app remains in the current state whenever you make changes, reducing the need for constant refreshes.
+
+11. **Third-Party Services**: Incorporate third-party services for bug tracking, crash reporting, and in-app user feedback.
+
+12. **Continuous Integration and Continuous Deployment (CI/CD) Tools**: Platforms like Bitrise or CircleCI offer extensive pipelines for automation, testing, and deployment.
+<br>
+
+## 12. Explain the concept of _hot reloading_ in _React Native_.
+
+**Hot Reloading** innovatively speeds up the development process by rendering updates to the running app in real-time. While preserving the app's current state, it allows developers to observe changes in layout, live.
+
+### Key Benefits
+
+- **Enhanced Productivity**: Avoiding repetitive recompilations and reinstalls.
+- **Quick Updates**: View real-time changes with contextual data.
+- **Error Localization**: Identify issues when and where they occur.
+
+### Mechanism
+
+- **State Retention**: Unlike a full reload, hot reloading keeps the app's state intact.
+- **Partial Update**: Only files that have been changed are updated, reducing the time needed.
+
+### Code Example: Enabling Hot Reloading
+
+In `App.js`, activate hot reloading with a few simple changes:
+
+```js
+if (__DEV__) {
+    const { activateKeepAwake } = require('expo-keep-awake');
+    activateKeepAwake();
+}
+```
+<br>
+
+## 13. How do you handle user input in _React Native_?
+
+**React Native** comprises several components tailored to user interaction and input processing for both iOS and Android platforms.
+
+### Core Input Components
+
+#### Text Input
+
+The most basic input component, `TextInput`, caters to single- and multi-line text input needs. It provides options for simple text, password fields, and more.
+
+#### Example: Basic `TextInput`
+
+Here is the React Native code:
+
+```react
+<TextInput placeholder="Enter your name" />
+```
+
+#### Input Fields with Auto-Complete
+
+`TextInput` leverages `autoCompleteType` to blend with both platforms' keyboard suggestions.
+
+If a user has previously entered data in the same field, the keyboard might suggest this data. On some platforms, this will include email address suggestions.
+
+Choose one of the following:
+- `off`: No auto-completion.
+- `username`: Auto-completion for usernames.
+- `password`: Secure auto-completion for passwords.
+- `email`: Auto-completion for email addresses.
+
+For example:
+
+```react
+<TextInput
+  placeholder="Enter your email"
+  autoCompleteType="email"
+/>
+```
+
+### Discrete options with Picker
+
+For small sets of options, `Picker` macOS. Picker is the component that iOS makes available that allows for single option selection (much like a dropdown).
+
+- `selectedValue`: The currently selected value.
+- `onValueChange`: The event triggered when a different value is selected.
+
+The iOS code is as follows:
+
+```react
+<Picker
+  selectedValue={selectedValue}
+  onValueChange={(itemValue, itemIndex) =>
+    setSelectedValue(itemValue)
+  }
+>
+  <Picker.Item label="Java" value="java" />
+  <Picker.Item label="JavaScript" value="js" />
+</Picker>
+```
+
+The android code is like:
+
+```react
+<Picker
+  selectedValue={selectedValue}
+  onValueChange={(itemValue, itemIndex) =>
+    setSelectedValue(itemValue)
+  }
+>
+  <Picker.Item label="Java" value="java" />
+  <Picker.Item label="JavaScript" value="js" />
+</Picker>
+```
+
+#### Text Areas for Multi-Line Input
+
+`TextArea` offers a multi-line text input field.
+
+Here is the React Native code:
+
+```react
+<TextArea placeholder="Type your message" />
+```
+<br>
+
+## 14. What is a `TouchableHighlight` in _React Native_?
+
+`TouchableHighlight` is a **React Native** component optimized for touch interactions. It uses the platform's native feedback effect when touched, making it ideal for buttons, tabs, or other interactive elements.
+
+### Key Features
+
+- **Accessibility**: It automatically handles accessibility states such as focus and press, adhering to **WAI-ARIA** and native mobile accessibility guidelines.
+
+- **Visual Feedback**: Upon touch, it provides a visual indication like opacity changes or highlighting, depending on the platform.
+
+- **On Press Event**: Executes a function when the component is pressed or activated using keyboard or assistive devices.
+
+### Code Example: `TouchableHighlight`
+
+Here is the React Native code:
+
+```jsx
+
+import { TouchableHighlight, Text, View } from 'react-native';
+
+const CustomButton = ({ label }) => (
+  <TouchableHighlight
+    style={{ backgroundColor: 'green', padding: 10, margin: 10, borderRadius: 5 }}
+    underlayColor="lime"
+    onPress={() => alert('Button pressed!')}
+  >
+    <Text style={{ color: 'white' }}>{label}</Text>
+  </TouchableHighlight>
+);
+
+const App = () => (
+  <View>
+    <CustomButton label="Press me!" />
+  </View>
+);
+
+```
+<br>
+
+## 15. Describe the _View_ component and its purpose in _React Native_.
+
+**View** in React Native functions similarly to a `<div>` in web development and allows for  **style definitions**.
+
+### Core Benefits
+
+- **Layout Flexibility**: Optimizes for different screen sizes and orientations.
+- **Style Configuration**: Streamlines style organization and replication.
+
+### Primary Use-Cases
+
+1. **Structural Containers**: Serve as building blocks for organizing UI elements.
+
+2. **Standalone Components**: When you need an element that can be styled or requires touch interaction.
+
+3. **Adaptive Design**: Design dynamic layouts that accommodate various device types and orientations.
+
+4. **Styling**: Apply shared styles to multiple child components.
+
+### Common Misconceptions
+
+#### 1. View Doesn't Represent Visual Elements
+
+While **View** forms the basic unit for layout and styling, it doesn't intrinsically display any content, nor is it scrollable. Within **View**, you incorporate **Text** and other components for visual representation.
+
+#### 2. View Doesn't Guarantee a Unique End-Component
+
+Despite being fundamental for rendering, **View** might not directly translate to a distinct UI component. The internal view system structures UI arrangements. Accessibility and debug tools in React Native App recognize and isolate View components. This distinction is crucial for device adaptation and adopting universal design principles.
+
+### Best Practices
+
+- **Organized Nesting**: Maintain clarity by thoughtfully nesting components.
+- **Styling Economics**: Leverage shared styles to minimize redundancy and ensure a consistent look throughout the app.
+- **Accessibility**: Maintain good accessibility by including visual aid for differently-abled users.
+- **Refactoring**: Regularly reevaluate your design choices and refactor as needed.
+<br>
+
+
+
+#### Explore all 100 answers here 👉 [Devinterview.io - React Native](https://devinterview.io/questions/web-and-mobile-development/react-native-interview-questions)
+
+<br>
+
+<a href="https://devinterview.io/questions/web-and-mobile-development/">
+<img src="https://firebasestorage.googleapis.com/v0/b/dev-stack-app.appspot.com/o/github-blog-img%2Fweb-and-mobile-development-github-img.jpg?alt=media&token=1b5eeecc-c9fb-49f5-9e03-50cf2e309555" alt="web-and-mobile-development" width="100%">
+</a>
+</p>
+
+Guruprasad
+
+# React Native Interview Questions and Answers
+
+## Table of Contents
+
+| No. | Questions                                                                                                    |
+| --- | ------------------------------------------------------------------------------------------------------------ |
+| 1   | [What is React Native?](#what-is-react-native)                                                               |
+| 2   | [Why use React Native?](#why-use-react-native)                                                               |
+| 3   | [What are the advantages of React Native?](#what-are-the-advantages-of-react-native)                         |
+| 4   | [List the essential components of React Native.](#list-the-essential-components-of-react-native)             |
+| 5   | [What are the cons of React Native?](#what-are-the-cones-of-react-native)                                    |
+| 6   | [How many threads run in React Native?](#how-many-threads-run-in-react-native)                               |
+| 7   | [What are props in React Native?](#what-are-props-in-react-native)                                           |
+| 8   | [What are React Native Apps?](#what-are-react-native-apps)                                                   |
+| 9   | [List the users of React Native.](#list-the-users-of-react-native)                                           |
+| 10  | [For what purpose is XHR module used in React Native?](#for-what-purpose-is-xhr-module-used-in-react-native) |
+| 11 | [Can we use Native code alongside React Native?](#can-we-use-native-code-alongside-react-native) |
+| 12 | [Are React Native built-in mobile apps like other Hybrid Apps which are slower in actual than Native ones?](#are=react-native-built-in-mobile-apps-like-other-hybrid-apps-which-are-slower-in-actual-than-native-ones?) |
+| 13 | [What is the difference between React and React Native?](#what-is-the-difference-between-react-and-react-native) |
+| 14 | [What is the difference between React Native and Native Script?](#what-is-the-difference-between-react-native-and-native-script) |
+| 15 | [Can we combine native codes of Android and iOS in React Native?](#can-we-combine-native-codes-of-android-and-ios-in-react-native) |
+| 16 | [What is the point of StyleSheet.create() in react native? What are the tradeoffs with this approach?](#what-is-the-point-of-stylesheet.create()-in-react-native-what-are-the-tradeoffs-with-this-approach) |
+| 17 | [Why React Native has very clear animations?](#why-react-native-has-very-clear-animations) |
+| 18 | [Differentiate between the React component and the React element.](#differentiate-between-the-react-component-and-the-react-element) |
+| 19 | [Why React Native use Redux?](#why-react-native-use-redux) |
+| 20 | [Which node_modules will run in React Native? How to test for this?](#which-node-modules-will-run-in-react-native-howto-test-for-this) |
+| 21 | [What is Virtual DOM and how it works in React Native?](#what-is-virtual-dom-and-how-it-works-in-react-native) |
+| 22 | [What is InteractionManager and what is its importance?](#what-is-interactionmanager-and-what-is-its-importance) |
+| 23 | [What is the point of the relationship between React Native and React?](#) |
+| 24 | [What are the similarities between React Native and React?](#) |
+| 25 | [Describe HOC.](#) |
+| 26 | [Define Native apps.](#) |
+| 27 | [What are Hybrid Apps?](#) |
+| 28 | [What are refs in React? When to use Refs?](#) |
+| 29 | [What does a react native packager do?](#) |
+| 30 | [What is NPM in React Native?](#) |
+| 31 | [What are “props” and “state”?](#) |
+| 32 | [What is Style?](#) |
+| 33 | [How To Handle Multiple Platforms?](#) |
+| 34 | [When would you use a class component over a functional component?](#) |
+| 35 | [How React Native handle different screen size?](#) |
+| 36 | [Are all React components usable in React Native?](#) |
+| 37 | [What is the challenge with React Native?](#) |
+| 38 | [Does React Native use the same code base for Android and iOS?](#) |
+| 39 | [Thus React Native is a native Mobile App?](#) |
+| 40 | [What is Gesture Responder System?](#) |
+| 41 | [How can React Native integrate more features on the existing app?](#) |
+| 42 | [What is the storage system in React Native?](#) |
+| 43 | [How React Native load data from server?](#) |
+| 44 | [Are compile-to-JS libraries like TypeScript or ClojureScript compatible with React Native? Why or why not?](#) |
+| 45 | [What is wrong with this code for querying a native API?](#) |
+| 46 | [Imagine you have an app which is a series of lists of images (e.g. like Instagram). The app seems to crash at random. What steps can we take to investigate and mitigate this in React Native?](#) |
+| 47 | [Native apps that feel smooth often incorporate lots of little animations for state changes and transitions. How would you implement these behaviors?](#) |
+| 48 | [What Is The Difference Between Using Constructor Vs Getinitialstate In React / React Native?](#) |
+| 49 | [What Happens When You Call Setstate?](#) |
+| 50 | [What Are Keys In React And Why Are They Important?](#) |
+| 51 | [What Is The Second Argument That Can Optionally Be Passed To Setstate And What Is Its Purpose?](#) |
+
+
+1. ### What is React Native?
+
+    React native is an open-source JavaScript framework designed by Facebook for native mobile applications development. It is based on a JavaScript library-React.
+    
+    React Native saves your development time as it enables you to build real and native mobile apps within a single language – JavaScript for both Android and iOS platforms, such that code once, run that on any platform, and the React Native App is ready for use with native look and feel.
+
+2. ### Why use React Native?
+
+    There is the following list of React Native features behind its use:
+    - Easy to use.
+    - Open-source framework
+    - Cross-platform compatibility
+    - Code Sharing
+    - Use a common language – JavaScript for cross-platform development.
+    - Faster Development
+    - Saves Time and efforts
+    - Gives Native look and feel
+
+3. ### What are the advantages of React Native?
+
+    - React Native is based on “Learn Once Write Everywhere” approach to equip developers with a tool that only needs to be learned once, just in a single language and then can be reused on both iOS and Android mobile platform.
+    - React Native offers **cross-platform development** and a real experience to developers allowing them to build only one app with effectively 70% code sharing between different platforms.
+    - React Native helps in **faster development.** Building one app instead of two using a common language gives speedier app deployment, delivery, and quicker time-to-market.
+    - React Native exists with **essential components** for ending of native apps as the app development ends with native look and feel.
+    - React Native has a **large community** of developers for its security. The developers are always ready to fix bugs and issues that occur at any instant. They improve the performance of React Native from time to time with the best practices possible.
+    - React Native supports **Live and Hot Reloading.** Both are different features. Live Reloading is a tool that helps in compiling and reading the modified files. Hot Reloading is based on HMR (Hot Module Replacement) and helps to display the updated UI content.
+
+4. ### List the essential components of React Native.
+
+    These are the following essential components of React Native:
+
+    - View is the basic built-in component used to build UI.
+    - Text component displays text in the app.
+    - Image component displays images in the app.
+    - TextInput is used to input text into the app via the keypad.
+    - ScrollView is a scrolling container used to host multiple views.
+
+5. ### What are the cons of React Native?
+
+    - React Native is still a new development platform as compared to iOS and Android platforms. It is still immature, i.e., in an improvement stage and impacting negatively on apps.
+    - Sometimes, React Native built-in apps face performance problem if there is a requirement of advanced functionality. In that case, they don’t perform well as compared to native apps.
+    - React Native has a steep learning curve for an average learner as it is not more comfortable in comparison to other cross-platform apps. It is because of existing JSX (JavaScript Syntax extension) in which HTML and JavaScript get combined and make learning challenging for average ones.
+    - React Native is based on JavaScript library which is fragile and creates a gap in the security robustness. As an expert’s point of view, React Native is not secure and robust for building highly confidential data apps like Banking and Financial apps.
+
+6. ### How many threads run in React Native?
+
+    There are two threads run in React Native:
+
+    - JavaScript thread
+    - Main UI thread
+
+7. ### What are props in React Native?
+
+    props pronounced as the properties of React Native Components. props are the immutable parameters passed in Presentational Component to provide data.
+
+8. ### What are React Native Apps?
+
+    React Native Apps are not web apps; they are the real and native mobile applications built-in a single language with the native components to run on mobile devices.
+
+9. ### List the users of React Native.
+
+    There are thousands of React Native built-in apps. Here is the list of those apps:
+
+    - Facebook
+    - Facebook Ads Manager
+    - Instagram
+    - F8
+    - Airbnb
+    - Skype
+    - Tesla
+    - Bloomberg
+    - Gyroscope
+    - Myntra
+    - UberEats
+
+10. ### For what purpose is XHR module used in React Native?
+
+    XHR module implements XMLHttpRequest to post data on the server.
+
+11. ### Can we use Native code alongside React Native?
+
+    Yes, we can use a native code alongside React Native for task completion, and several limitations can also overcome in previous versions like Titanium.
+
+12. ### Are React Native built-in mobile apps like other Hybrid Apps which are slower in actual than Native ones?
+
+    React Native designed as a highly-optimized performance-based framework that builds real mobile apps with native components. Facebook is the best-suited example of high performance based app built-in React Native.
+
+13. ### What is the difference between React and React Native?
+
+    - React is a JavaScript library while React native is a framework based on React.
+    - js is used for building UI and web applications while React Native is used for creating cross-platform native mobile apps.
+    - Both uses synonymous tags such as `<div> <h1> <h2>` are the tags in React.js and `<View> <Text>` are the tags in React native.
+    - js uses DOM for path rendering of HTML tags while React Native uses AppRegistry for app registration.
+
+14. ### What is the difference between React Native and Native Script?
+
+    - React Native uses only a single core development language- JavaScript while Native Script can use any of these languages- Angular, Vuejs, TypeScript, and JavaScript.
+    - React Native has faster development speed than Native Script. React Native exists with reusable components that developed at once can be used at different mobile platforms and accelerates mobile app development while Native Script exists with a less number of plugins among which some pass improper verification.
+    - React Native performs high as compared to Native Script. React Native is React based and uses virtual Dom for faster UI updation while Native Script uses slower Angulas, Vuejs, and TypeScript.
+    - Native Script exists with a box of various themes that shorten the gap between the different platform UIs while React Native doesn’t live with predefined themes; you get default look and feel by the devices.
+
+15. ### Can we combine native codes of Android and iOS in React Native?
+
+    Yes, we can do this as React Native fluently combines the components of both iOS and Android written in Swift/ Objective-C or Java.
+
+16. ### What is the point of StyleSheet.create() in react native? What are the tradeoffs with this approach?
+
+    In React Native, StyleSheet.create() send the style only once through the bridge to avoid passing new style object and ensures that values are immutable and opaque.
+
+    The key tradeoff with this method is that recomputing styles based on external criteria (like screen rotation or even a user-selected viewing mode) needs some infrastructure built to determine which styles to use. If objects were passed in “raw” they could be recomputed on the fly every time, based on arbitrary criteria.
+
+17. ### Why React Native has very clear animations?
+
+    The animated API of React Native was designed as serializable so that users can send animations to native without going through the bridge on every frame. Once the animation starts, a JS thread can be blocked, and the animations will still run fluently. As the code converted into native views before rendering, the animations in React native will run smoothly, and the users get bright animations.
+
+    Certain animation types, like `Animation.timing` and `Animation.spring`, can be serialized and sent across the asynchronous bridge before they are executed. This allows the runtime to defer the actual drawing of the animation entirely to the native side, instead of trying to send positional values across the bridge as each frame is rendered. This does not work with animations that are not computable ahead of time. For example:
+    ```
+    Animated.timing(new Animated.Value(0), {
+        useNativeDriver: true,
+        toValue: 100,
+        duration: 100
+    }).start()
+    ```
+    This will serialize the operation and send it to the native side before starting it.
+
+18. ### Differentiate between the React component and the React element.
+
+    React component is a class or function that accepts input and returns a React element while React element displays the look of React Component Instance to be created.
+
+19. ### Why React Native use Redux?
+
+    Redux is a standalone state management library that React Native use to simplify data flow within an app.
+
+20. ### Which node_modules will run in React Native? How to test for this?
+
+    In React Native, node_modules as any pure JavaScript library that does not rely on Node.js runtime modules, and does not rely on web-specific concepts like `window.location.pathname` will run fine. But be conscious as there exists no way to test for this with Babel- it doesn’t scan these libraries for offending dependencies. A module that uses `window.location.pathname` may fail at runtime in a different unexpected place.
+
+21. ### What is Virtual DOM and how it works in React Native?
+
+    Virtual Dom is an in-memory tree representation of the real DOM with lightweight elements. It provides a declarative way of DOM representation for an app and allows to update UI whenever the state changes.
+    
+    **Working** :
+    
+    Virtual DOM lists elements and their attributes and content. It renders the entire UI whenever any underlying data changes in React Native. Due to which React differentiates it with the previous DOM and a real DOM gets updated.
+
+22. ### What is InteractionManager and what is its importance?
+
+    InteractionManager is a native module in React native that defers the execution of a function until an “interaction” finished.
+
+     We can call `InteractionManager.runAfterInteractions(() => {...})` to handle this deferral. We can also register our own interactions.
+
+    **Importance** React Native has JavaScript UI thread as the only thread for making UI updates that can be overloaded and drop frames. In that case, InteractionManager helps by ensuring that the function is only executed after the animations occurred.
+
+23. ### What is the point of the relationship between React Native and React?
+
+    React is a JavaScript library. React Native is a framework based on React that use JavaScript for building mobile applications. It uses React to construct its application UI and to define application business logic. React updates a real DOM by tree diffing and allows React Native to work. It implements a bridge that allows the JavaScript runtime to communicate asynchronously with the native runtime.
+
+24. ### What are the similarities between React Native and React?
+
+    React.js and React Native share
+
+    - same lifecycle methods like componentDidMount
+    - same state and prop variables
+    - same component architecture
+    - similar management libraries like Redux
+
+25. ### Describe HOC.
+
+    HOC (High Order Components) in React is the functional programming methodology for reusing component logic.
+
+    - takes a component as an argument and
+    - returns a new component
+
+    It is a pattern evolved from React’s compositional nature to decompose the logic into simpler and smaller reusable functions.
+
+26. ### Define Native apps.
+
+    Native app is a software program for a specific mobile device that is developed on a particular platform in a specific programming language like Objective-C/Swift for iOS and Java for Android. It can use device-specific hardware and software as built on a particular device and its OS. It uses the latest technology such as GPS and provides optimized performance.
+
+27. ### What are Hybrid Apps?
+
+    Hybrid applications are the web applications developed through HTML, CSS, JavaScript web standards and wrapped in a native container using a mobile WebView object. These apps are easier to maintain.
+
+28. ### What are refs in React? When to use Refs?
+
+    Refs are escape hatch that provides a direct way to access DOM nodes or React elements created in the render method.
+
+    Refs get in use when
+
+    - To manage focus, text selection, or media playback
+    - To trigger imperative animations
+    - To integrate with third-party DOM libraries
+
+    In order to use them you add a ref attribute to your component whose value is a callback function which will receive the underlying DOM element or the mounted instance of the component as its first argument.
+    
+    ```
+    class UnControlledForm extends Component {
+        handleSubmit = () => {
+            console.log("Input Value: ", this.input.value)
+    }
+    render () {
+        return (
+            <form onSubmit={this.handleSubmit}>
+                <input
+                type='text'
+                ref={(input) => this.input = input} />
+                <button type='submit'>Submit</button>
+            </form>
+            )
+        }
+    }
+    ```
+
+    Above notice that our input field has a ref attribute whose value is a function. That function receives the actual DOM element of input which we then put on the instance in order to have access to it inside of the handleSubmit function.
+
+    It’s often misconstrued that you need to use a class component in order to use refs, but refs can also be used with functional components by leveraging closures in JavaScript.
+
+    ```
+    function CustomForm ({handleSubmit}) {
+        let inputElement
+        return (
+            <form onSubmit={() => handleSubmit(inputElement.value)}>
+            <input
+                type='text'
+                ref={(input) => inputElement = input} />
+            <button type='submit'>Submit</button>
+            </form>
+        )
+    }
+    ```
+
+29. ### What does a react native packager do?
+
+    A react native packager does a few things:
+
+    - It combines all JavaScript code into a single file
+    - It translates any JavaScript code that your device don’t understand (e.g., JSX or some of the newer JS syntax)
+    - It converts assets like PNG files into objects that can be displayed by an Image
+
+30. ### What is NPM in React Native?
+
+    npm installs the command line interface in React Native.
+
+    `npm install -g react-native-cli`
+
+31. ### What are “props” and “state”?
+
+    **“Props”** and **“state”** are both plain JavaScript objects used to control data inside the components.
+
+    > props :
+    - short for “properties.”
+    - Immutable parameters -> Unchangeable inside the component.
+    - Set by their parent and fixed for the whole lifetime of a component.
+    - Get passed to the Presentational component.
+
+    > state :
+    - Mutable parameters -> Changeable inside the component.
+    - Get handled within the container component.
+    - Can’t be accessed and modified outside the component.
+
+32. ### What is Style?
+
+    The style prop is a plain JavaScript object use to making style of React Native application. There are two ways to style your element in React Native application.
+
+    - **style** property: adds styles inline.
+    - external **Stylesheet**: enables us to write concise code.
+
+33. ### How To Handle Multiple Platforms?
+
+    React Native smoothly handles multiple platforms. The large numbers of the React Native APIs are cross-platform so that one React Native component will work seamlessly on both iOS and Android. It provides the ways using which you can easily organize your code and separate it by platform:
+
+    - Platform module to detect the platform in which the app is running and
+    - platform-specific file extensions to load the relevant platform file.
+    
+    Facebook, the creator of React native, claims that the Ad Manager application has 87% code reuse across these two platforms
+
+34. ### When would you use a class component over a functional component?
+
+    We use class component if our component has state or a lifecycle method(s). Otherwise, we use a Functional component.
+
+35. ### How React Native handle different screen size?
+
+    React Native offers many ways to handle different screen sizes:
+
+    - **Flexbox** is designed to provide a consistent layout on different screen sizes. It offers three main properties:
+      - flexDirection
+      - justifyContent
+      - alignItems
+    - **Pixel Ratio** exists in the official documentation with the definition such that we can get access to the device pixel density by using PixelRatio class. We will get a higher resolution image if we are on a high pixel density device. An ethical principle is that multiply the size of the image we display by the pixel ratio.
+    - **Dimensions** easily handle different screen sizes and style the page precisely. It needs to write the code only once for working on any device.
+
+36. ### Are all React components usable in React Native?
+
+    Web React components use DOM elements to display (ex. div, h1, table, etc.), but React Native does not support these. We will need to find libraries/components made specifically for React Native.
+    
+    But today React is focusing on components that can be shared between the web version of React and React Native. This concept has been formalized since React v0.14.
+
+37. ### What is the challenge with React Native?
+
+    Working across separate Android and iOS codebases is challenging.
+
+38. ### Does React Native use the same code base for Android and iOS?
+
+    Yes, React Native uses the same code base for Android and IOS. React takes cares of the native components translations.
+    
+    For example : A React Native ScrollView uses native ScrollView on Android and UiScrollView on iOS.
+
+39. ### Thus React Native is a native Mobile App?
+
+    Yes, React Native compiles a native mobile app using native app components. React Native builds a real mobile app that is indistinguishable from an app built using Objective-C or Java.
+
+40. ### What is Gesture Responder System?
+
+    The gesture responder system manages the lifecycle of gestures in the app.
+    
+    Users interact with mobile apps mainly through touch. They can use a combination of gestures, such as tapping on a button, zooming on a map, sliding on a widget or scrolling a list. The touch responder system is required to allow components to negotiate these touch interactions without any additional knowledge of their parent or child components.
+
+41. ### How can React Native integrate more features on the existing app?
+
+    React Native is great to start a new application from scratch. However, React Native works well to add new features to an existing native app. It needs some steps to add new React Native based features, screen, views, etc. The specific steps are different for different platform you’re targeting.
+
+    - Set up directory structure.
+    - Install JavaScript dependencies.
+    - Configuring permissions.
+    - Code integration.
+    - Test your integration.
+
+42. ### What is the storage system in React Native?
+
+    React Native uses **AsyncStorage** class to store data in key-value pair which is global to all app. AsyncStorage is a JavaScript code which is a simple, unencrypted, asynchronous and persistent. React Native also uses separate files for iOS and RocksBD or SQLite for Android.
+    
+    Using AsyncStorage class, you must have a data backup, and synchronization classes as data saved on the device is not permanent and not encrypted.
+
+43. ### How React Native load data from server?
+
+    React Native provides the **Fetch API** which deals networking needs. React Native uses componentDidMount lifecycle method to load the data from server.
+
+    `fetch('https://mywebsite.com/mydata.json')`
+
+    Other Networking libraries which interact with server are:
+
+    - XMLHttpRequest API
+    - WebSockets
+
+44. ### Are compile-to-JS libraries like TypeScript or ClojureScript compatible with React Native? Why or why not?
+
+    Languages that compile to JavaScript are generally compatible with React Native. React Native uses Babel to transform JavaScript into a form that is consumable by the native OS’s JavaScript runtime, using the `react-native` Babel plugin. As long as Babel can compile your JavaScript, and your code does not rely on web- or Node.js-specific dependencies, it will run in React Native.
+
+45. ### What is wrong with this code for querying a native API?
+    ```
+    class GyroJs {
+        setGyroPosition(pos) {
+            if (pos === null || typeof pos === 'undefined') {
+                throw new Error('The position must be defined');
+            }
+            this.pos = pos;
+        }
+        constructor() {
+            const gyroscopePosition = NativeModules.MyGyroModule.gyroPosition();
+            this.setGyroPosition(gyroscopePosition);
+        }
+    }
+    ```
+    This code will always throw an error because the value of `gyroscopePosition` will always be an unresolved `Promise`. It’s important to remember that the bridge that connects JavaScript and native code is asynchronous. We can either receive results from this side by passing in a callback (not done in this example), or by returning a `Promise`. In this case, we need to append a `then()` call to the `gyroPosition()` call and set the position inside it.
+
+46. ### Imagine you have an app which is a series of lists of images (e.g. like Instagram). The app seems to crash at random. What steps can we take to investigate and mitigate this in React Native?
+
+    Often, and especially on the Android platform, lists of images are not properly recycled when scrolling. Their memory is never garbage collected, nor is it manually freed at a lower level. This leads to out-of-memory (OOM) crashes that can occur seemingly at random as the app’s memory is exhausted.
+
+    We can investigate this by profiling the app’s heap memory usage in either Xcode or Android Studio. If you scroll through a list of images and notice the heap usage steadily climbing without ever dipping, it probably means that your images aren’t being recycled properly.
+
+    To mitigate this, we can check which list implementation we are using. In modern versions of React Native, `ListView` should never be used; ensure that the `FlatList` component is handling the rendering instead. If this is not sufficient after tuning, you can try making your images lower resolution.
+
+47. ### Native apps that feel smooth often incorporate lots of little animations for state changes and transitions. How would you implement these behaviors?
+    
+    React Native comes with the `Animated` API built in. This API is declarative: We define specific animations, using `Animated.timing, Animated.spring`, etc., and provide the exact parameters needed for the animation to run. This technique falls apart when we need lots of subtle and delicate animations on the fly; it’s not performant, and maintaining all that code would be a nightmare.
+
+    Instead, we look to the `LayoutAnimation` module, which is an interpolative API. We can invoke predefined `LayoutAnimations`, or define our own. `LayoutAnimation` watches changes in the positions of elements between cycles of the render loop, and computes the positional differences between elements at different cycles. Then, it interpolates those changes and produces a smooth, natively driven animation.
+
+48. ### What Is The Difference Between Using Constructor Vs Getinitialstate In React / React Native?
+    
+    The two approaches are not interchangeable. You should initialize state in the constructor when using ES6 classes, and define the getInitialState method when using React.createClass.
+
+    ```
+    class MyComponent extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = { /* initial state */ };
+        }
+    }
+    ```
+    is equivalent to
+
+    ```
+    var MyComponent = React.createClass({
+        getInitialState() {
+        return { /* initial state */ };
+        },
+    });
+    ```
+
+49. ### What Happens When You Call Setstate?
+
+    The first thing React will do when setState is called is merge the object you passed into setState into the current state of the component. This will kick off a process called reconciliation. The end goal of reconciliation is to, in the most efficient way possible, update the UI based on this new state.
+
+    To do this, React will construct a new tree of React elements (which you can think of as an object representation of your UI). Once it has this tree, in order to figure out how the UI should change in response to the new state, React will diff this new tree against the previous element tree. By doing this, React will then know the exact changes which occurred, and by knowing exactly what changes occurred, will able to minimize its footprint on the UI by only making updates where absolutely necessary.
+
+50. ### What Are Keys In React And Why Are They Important?
+
+    Keys are what help React keep track of what items have changed, been added, or been removed from a list.
+
+    ```
+    render () {
+        return (
+            <ul>
+                {this.state.todoItems.map(({task, uid}) => {
+                    return <li key={uid}>{task}</li>
+                })}
+            </ul>
+        )
+    }
+    ```
+
+    It’s important that each key be unique among siblings. We’ve talked a few times already about reconciliation and part of this reconciliation process is performing a diff of a new element tree with the most previous one. Keys make this process more efficient when dealing with lists because React can use the key on a child element to quickly know if an element is new or if it was just moved when comparing trees. And not only do keys make this process more efficient, but without keys, React can’t know which local state corresponds to which item on move. So never neglect keys when mapping.
+
+51. ### What Is The Second Argument That Can Optionally Be Passed To Setstate And What Is Its Purpose?
+
+    A callback function which will be invoked when setState has finished and the component is re-rendered.
+
+    Something that’s not spoken of a lot is that setState is asynchronous, which is why it takes in a second callback function. Typically it’s best to use another lifecycle method rather than relying on this callback function, but it’s good to know it exists.
+
+    ```
+    this.setState(
+        { username: 'tylermcginnis33' },
+        () => console.log('setState has finished and the component has re-rendered.')
+    )
+    ```
+
+
 # JavaScript Interview Questions & Answers
 
 ---
@@ -23009,1430 +24438,3 @@ The questions provided in this repository are the summary of frequently asked qu
 Good luck with your interview 😊
 
 ---
-
-# 100 Must-Know React Native Interview Questions in 2026
-
-<br>
-
-## 1. What is _React Native_ and how does it differ from _React_?
-
-**React Native** extends the award-winning React library, making it possible to build **native mobile applications** using familiar web technologies.
-
-### Differences from React
-
-- **Platform Scope**: React is tailored for web development, while React Native is exclusive to building iOS and Android applications.
-- **Rendering Engine**: React uses the browser's DOM for visualization, whereas React Native achieves a parallel outcome through native platform rendering.
-- **Component Style**: While most of the component-building strategies and lifecycles between React and React Native are analogous, the **controls manage** the considerable difference in rendering and event handling. For instance, React uses simple buttons and divs, whereas React Native leverages platform-compliant components like `Button`, `View`, and `Text`.
-- **Integration with APIs**: While React targets web APIs, React Native consolidates connectivity with native mobile device features and APIs. This extension makes it feasible to tap into mechanism such as Camera, GPS, and Fingerprint sensors.
-
-### Code Example: React vs React Native
-
-Here is the React code:
-
-```jsx
-import React, { useState } from 'react';
-
-const MyComponent = () => {
-  const [count, setCount] = useState(0);
-  
-  return (
-    <button onClick={() => setCount(count+1)}>
-      Clicked {count} times
-    </button>
-  );
-};
-```
-
-And here is the equivalent React Native code:
-
-```jsx
-import React, { useState } from 'react';
-import { View, Text, Button } from 'react-native';
-
-const MyComponent = () => {
-  const [count, setCount] = useState(0);
-  
-  return (
-    <View>
-      <Button title={`Clicked ${count} times`} onPress={() => setCount(count+1)} />
-    </View>
-  );
-};
-```
-<br>
-
-## 2. Can you explain the concept of "_Learn once, write anywhere_" in the context of _React Native_?
-
-The main idea of "Learn Once, Write Anywhere" in the context of **React Native** is "**code reusability**". Libraries and components written in **React** can be utilized across multiple platforms, while platform-specific code sections adapt as needed.
-
-This approach offers **significant efficiency** in both development and maintenance as it ensures **consistent behavior** across platforms.
-
-### Key Concepts
-
-- **Abstraction**: Developers can focus on business logic without being overly concerned about low-level platform intricacies.
-- **Adaptation**: Platform-specific visual and user experience elements can be incorporated when necessary.
-- **Reusable Components**: Leveraging shared components across platforms reduces redundancy and simplifies code maintenance.
-
-### Core Mechanisms
-
-- **Platform Selectors**: Logical checks based on the running platform, such as `Platform.OS === 'ios'`, provide branching capabilities.
-
-- **Platform-related Directories**: Platform-specific files can be organized into dedicated directories (e.g., `ios` and `android`), ensuring distinct settings and behaviors.
-
-- **Platform-specific Extensions**: File naming conventions utilizing platform-specific extensions (e.g., `filename.ios.js`) enable tailored module imports.
-
-- **Conditional Styles**: Styles imported or applied differently on distinct platforms ensure visual consistency.
-
-### Application Scenarios
-
-- **Authenticators**: Different authentication workflows often exist for iOS and Android. The shared codebase can adapt gracefully using platform-specific file imports and methods.
-
-- **UI/UX Adaptations**: When the look and feel of certain components deviate across platforms, such as navigational elements, shared business logic with platform-specific UI components is key.
-  
-- **Push Notifications**: Configurations and handling strategies for push notifications might necessitate platform-specific implementations.
-
-- **Permissions**: The way permissions like location or camera are requested and handled can differ between **iOS** and **Android**, requiring adaptation within the common React Native codebase.
-
-### Caveats and Best Practices
-
-- **Balance**: Strive for a harmonious blend of shared and platform-specific code, avoiding gridlock due to over customization.
-
-- **Aim at Consistency**: Use platform-agnostic libraries as much as possible to ensure a uniform look and feel.
-
-- **Maintenance Awareness**: Background differences in platform conventions, potential updates, and evolving third-party libraries underscore the need for periodic reviews of platform-specific modules.
-<br>
-
-## 3. How do you create a basic _React Native application_?
-
-Creating a basic **React Native** application involves a number of steps, such as setting up your development environment, installing required software, and running a boilerplate application.
-
-### Setting Up Your Environment
-
-First, ensure **Node.js** and **npm** are installed on your computer. To check for existing installations:
-- For Node.js, use `node -v` or `npm -v`. If not installed, get the latest version from [Node.js website](https://nodejs.org).
-- For npm, use `npm -v`.
-
-### Setting Up Expo
-
-**Expo** offers a quicker setup for a lightweight app. However, for large or complex applications, direct use of React Native might be more suitable. To set up Expo, install it globally via npm:
-
-```sh
-npm install -g expo-cli
-```
-
-### Creating Your Project
-
-#### With Expo (Recommended for Beginners)
-
-1. Choose a Development Tool: You can select **Expo Go**, **simulator/emulator**, or **physical device** for testing.
-2. Create a New Project: Use the `expo init` command and choose a template. Common choices include types like "blank," "tabs," and "from existing git repo."
-3. Test Your Setup: Run "hello world" with `expo start`.
-
-#### Without Expo
-
-If you're not using Expo, create a new project with npm or Yarn:
-
-**With npm**:
-
-```sh
-npx react-native init MyApp
-cd MyApp
-npx react-native run-android
-# OR
-npx react-native run-ios
-```
-
-**With Yarn**:
-
-```sh
-npx react-native init MyApp
-cd MyApp
-yarn android
-# OR
-yarn ios
-```
-
-### Looking at Your Project
-
-1. **app.json**: This file holds configuration settings.
-2. **package.json** and **yarn.lock** (if using Yarn): These files manage project dependencies.
-3. **node_modules/**: This directory stores your project's dependencies. This directory and its contents should never be pushed to your version control system.
-
-### App Entry Point
-
-The default path for the app's entry point and main code is:
-
-- For Android: `index.js` or `App.js` (generated by Expo)
-- For iOS: `AppDelegate.m` and `main.m`
-
-### Directory Structure
-
-The initial setup often includes these directories:
-
-- **android/**: Contains the Android project.
-- **ios/**: Contains the iOS project.
-- **node_modules/**: Modules fetched and managed via npm or Yarn.
-- **package.json**: Lists the app's metadata, as well as its dependencies.
-<br>
-
-## 4. What are _components_ in _React Native_?
-
-In React Native, **components** are building blocks that encapsulate UI and logic, making app development modular and efficient. There are two types of components: **Base Components** and **Custom Components**.
-
-### Base Components
-
-These are core UI elements provided by React Native, directly corresponding to native views or controls. They are optimized for performance and interactive consistency.
-
-- **Text**: Displays readable text.
-- **View**: A container that supports layout with styles, such as flexbox.
-- **Image**: Displays images.
-
-### Custom Components
-
-These are created by developers and can be composed of both base and custom components, offering a higher level of abstraction. Custom components are reusable, promote a consistent design, and streamline UI updates.
-
-#### Text\_Example.jsx
-
-Here is the React Native code:
-
-```jsx
-import React from 'react';
-import { Text } from 'react-native';
-
-const CustomText = ({ children }) => (
-  <Text style={{ fontFamily: 'Roboto-Bold', color: 'darkslategray' }}>{children}</Text>
-);
-
-export default CustomText;
-```
-
-### Component Nesting and Tree Structure
-
-**React Native** applications are tree-structured with multiple components nested within one another. This composition allows for consistent and quick alterations across the app. Whether it's a `Text`, `View`, or custom component, each is a node in the component tree, visually impacting the app. Devs split the UI into smaller, self-contained parts to simplify maintenance and testing.
-
-### Core Principles of Building Components
-
-1. **Reusability**: Both base and custom components are designed for reuse in different parts of the application, further expanding the idea of modular development.
-2. **Autonomy**: Each component should be self-sufficient, not heavily reliant on external data or functionality. This promotes easier maintenance and testing.
-3. **UI Focus**: Components should either cater to UI or some specific functionality, but never both. This separation ensures a better code structure and maintainability.
-4. **Loose Prop Types**: Custom components should generally avoid having too many mandatory props to allow for flexibility in their usage. They can, instead, rely on sensible defaults.
-5. **Integrative Mindset**: When designing components, developers must have a holistic approach, keeping in mind how everything will come together in the UI.
-
-### Managing Component State
-
-State management in components revolves around keeping track of changing data within that component. It's common in interactive UIs and involves data binding and conditional rendering. In React Native, components invoke a `useState` hook to integrate reactive state management.
-
-#### CustomText with State
-
-Here is the modified `CustomText` component:
-
-```jsx
-import React, { useState } from 'react';
-import { Text, TouchableOpacity } from 'react-native';
-
-const CustomText = ({ children }) => {
-  const [isBold, setIsBold] = useState(false);
-
-  const toggleBold = () => setIsBold(prevState => !prevState);
-
-  return (
-    <TouchableOpacity onPress={toggleBold}>
-      <Text style={{ fontFamily: isBold ? 'Roboto-Bold' : 'Roboto-Regular', color: 'darkslategray' }}>{children}</Text>
-    </TouchableOpacity>
-  );
-};
-
-export default CustomText;
-```
-<br>
-
-## 5. Explain the purpose of the `render()` function in a _React Native component_.
-
-The `render()` function, which is **mandatory** for all **React** and **React Native** components, is a gateway for JSX, receiving, processing, and returning the JSX layout. This function is like a workbench where the developer prepares the visual representation.
-
-### JSX: Visual Blueprint
-
-**JSX** is HTML-like markup within JavaScript that provides a structured description of the visual layout. It's like a **visual blueprint** for the component.
-
-The `render()` function leverages this blueprint, converting the JSX elements into the actual visual UI components.
-
-Here's a simple example:
-
-```jsx
-// JSX Blueprint
-let myJSX = (
-  <View>
-    <Text>Hello, World!</Text>
-  </View>
-);
-
-// 'render()' Function
-let render = () => {
-  let uiComponent = (
-    <View>
-      <Text>Hello, World!</Text>
-    </View>
-  );
-
-  // Visual representation
-  return uiComponent;
-};
-```
-
-### Code Maintenance
-
-Having the `render()` function separates **declarative structure** from actual evaluatives and provides a clear workflow, making the code **easier to maintain** and understand.
-
-### Virtual DOM Interaction
-
-React Native employs a **virtual DOM** to optimize and streamline UI updates. When the `state` or `props` of a component change, `render()` is called to ensure the **virtual DOM** is in sync. The virtual DOM then identifies and applies only the necessary updates to the actual UI, reducing redundancy and rendering time.
-
-### Performance Optimization: Conditional Rendering
-
-Conditional rendering, controlled by **if-else**, is facilitated within the `render()` method, allowing for context-aware UI updates that ensure **sensible resource** and display utilization.
-
-### Side-Effects Handling: Lifecycle Methods
-
-The `render()` method is just one of several **lifecycle methods**. Accurate handling of these methods through `render()` and controlled component updates ensures proper **data-fetching** and **side-effect management**.
-
-### UI Interactivity: Integrating JSX with Methods
-
-JSX elements link visual representation with the logic behind user interactions—this is powered by methods like `onPress`, which, again, correspond to changes in `state` or `prop` triggers, leading back to, you guessed it, the trustworthy `render()` function.
-
-### Code Example: Using JSX and `render()`
-
-Here is the React Native code:
-
-```jsx
-import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
-
-class MyComponent extends Component {
-  state = {
-    data: ['Item 1', 'Item 2', 'Item 3'],
-    showList: true,
-  };
-
-  renderList() {
-    if (!this.state.showList) {
-      return null;
-    }
-
-    return (
-      <ScrollView>
-        {this.state.data.map((item, index) => (
-          <Text key={index}>{item}</Text>
-        ))}
-      </ScrollView>
-    );
-  }
-
-  toggleList = () => {
-    this.setState({ showList: !this.state.showList });
-  };
-
-  render() {
-    return (
-      <View>
-        <TouchableOpacity onPress={this.toggleList}>
-          <Text>{this.state.showList ? 'Hide' : 'Show'} List</Text>
-        </TouchableOpacity>
-        {this.renderList()}
-      </View>
-    );
-  }
-}
-```
-<br>
-
-## 6. What is _JSX_ and how is it used in _React Native_?
-
-**JSX** is a syntax extension for JavaScript, especially popular in React and React Native for expressing your UI components concisely.
-
-It effectively lets you write **XML-style** code directly in your JavaScript files, making component definition and nesting visually intuitive.
-
-### Key JSX Features in React Native
-
-- **Component Definition**: Use `.JSX` to visually group styling and component structure.
-
-```jsx
-const MyComponent = () => {
-  return (
-    <View style={styles.container}>
-      <Text>Hello, React Native!</Text>
-    </View>
-  );
-};
-```
-
-- **Regular JS** (No JSX):
-```javascript
-const MyComponent = () => {
-  return React.createElement(View, { style: styles.container }, React.createElement(Text, null, "Hello, React Native!"));
-};
-```
-
-- **Component Nesting**: Implement parent-child relationships via clear indentation in your JSX tree, enhancing visual hierarchy.
-
-```jsx
-return (
-  <View>
-    <Text>Parent</Text>
-    <View>
-      <Text>Child 1</Text>
-      <Text>Child 2</Text>
-    </View>
-  </View>
-);
-```
-
-- **Event Handling**: Attach event listeners to UI events easily within the JSX structure.
-
-```jsx
-<TouchableOpacity onPress={handlePress}>
-  <Text style={styles.buttonText}>Press Me</Text>
-</TouchableOpacity>
-```
-
-- **Equivalent Without JSX**:
-```javascript
-React.createElement(TouchableOpacity, { onPress: handlePress }, React.createElement(Text, { style: styles.buttonText }, "Press Me"));
-```
-
-
-### JSX Transpiling
-
-The **Babel** transpiler lies at the heart of JSX functionality, converting JSX into regular JavaScript for compatibility with web and mobile platforms.
-
-For instance, when you author this **React Native** code:
-```jsx
-return <View style={styles.container}><Text>Hello, React Native!</Text></View>;
-```
-
-Babel transpiles it into the following JavaScript:
-```javascript
-return React.createElement(View, { style: styles.container }, React.createElement(Text, null, "Hello, React Native!"));
-```
-<br>
-
-## 7. Can you list some of the core components in _React Native_?
-
-**React Native** has several fundamental components.
-
-### Core Components
-
-1. **View**: The basic container that supports layout with Flexbox.
-2. **Text**: For displaying text.
-3. **Image**: For displaying images either from the local file system or the network.
-
-### Specialized Components
-
-- **ScrollView**: For displaying a scrollable list of components.
-- **Listview (deprecated)**: A high-performance, cross-platform list view.
-- **TextInput**: An input component with optional prompts, as well as a variety of keyboard types, enabling text input.
-
-### User Interface
-
-- **Button**: A UI component that enables a user to interact with the application.
-- **Picker**: A dropdown list that displays a picker interface.
-
-### Basic Functionality Components
-
-- **ActivityIndicator**: Displays a rotating circle, indicating that the app is busy performing an operation.
-- **Slider**: Lets the user select a value by sliding the thumb on the bar.
-- **Switch**: Used for the on/off state.
-
-### iOS and Android Platform Integration
-
-- **SegmentedControlIOS**: Renders a UISegmentedControl on iOS.
-- **TabBarIOS**: Renders a tab bar with tabs that can be swiped.
-  - `TabBarIOS.Item`: Represents an item in a `TabBarIOS` component.
-- **ToolbarAndroid**: A toolbar for use with the `CoordinatorLayout`, offering additional features, such as controls for children of the Views.
-  - `ToolbarAndroid`: Represents a standard Android toolbar.
-
-### List Views
-
-- **FlatList**: A core virtualized list component supporting both vertical and horizontal scrolls. It's memory-efficient and only renders the elements on-screen. It also supports dynamic loading.
-- **SectionList**: Much like `FlatList`, but also allows you to section your data.
-
-### Other Components
-
-- **ActionSheetIOS**: Provides a pre-designed action sheet to display the list of options.
-- **Alert**: For displaying an alert dialog.
-- **AncestryManager**: Manages the relationships of Views. Developed initially for aiding the animation framework.
-- **Animated**: A consolidated toolset to perform animations.
-- **Appearance**: Gains insights into the unique appearance traits of respective iOS components if the device is running on iOS 13 or later.
-- **DevSettings**: Owns a group of system settings tailored to the development phase.
-- **Dimensions**: Assists in determining the dimensions of the viewport.
-- **DormantStack**: Regulates the arrangement of Views. These views remain dormant and stop updating when they are not visible.
-- **DrawerLayoutAndroid**: A unique drawer layout design developed for Android.
-- **InputAccessoryView**: Accommodates customized views for input access.
-- **KeyboardAvoidingView**: Augments the scalability of the UI in circumstances like keyboard being opened.
-- **MaskedViewIOS**: Allows developers to create custom views with a specified shape.
-- **Picker**: A seeming replica of the `Picker` that shows a native picker interface after a click.
-- **Platform**: A utility to single out the present platform.
-- **ProgressViewIOS**: For when one needs to display a standard iOS progress bar.
-- **RefreshControl**: A tool used to integrate swipe-down-the-screen functionalities.
-- **SafeAreaView**: A safety net component for iOS, regulating the area displays that would have compromised otherwise.
-- **StatusBar**: A utility to handle the app's status bar control.
-- **StyleSheet**: A collection of type-safe approaches to the integration of styles in your app.
-- **TouchableHighlight**: A view that illustrates a sub-view while being tapped.
-- **TouchableNativeFeedback**: An optimized version of the `TouchableHighlight` toward Android platforms.
-- **TouchableOpacity**: Reduces the opacity of the view for conveying the touch response.
-- **TouchableWithoutFeedback**: A view reacting to touches and signals exclusively without providing any feedback.
-- **Vibration**: Triggers the device's vibration mechanism.
-- **ViewPropTypes**: Manages the prop-types for the `View` component.
-<br>
-
-## 8. How do you handle _state management_ in _React Native_?
-
-**State management** in **React Native** involves tracking and updating the state of components.
-
-### Local State Management
-
-- **State Declaration**: Use `useState` from the React library.
-  
-  ```jsx
-  import React, { useState } from 'react';
-
-  const MyComponent = () => {
-    const [count, setCount] = useState(0);
-  };
-  ```
-
-- **State Update**: Invoke the state-modifying function (in this case, `setCount`).
-
-### Global State Management
-
-- **State Declaration**: Utilize the "Context" API via `Provider` to make the state globally available.
-
-- **Selecting**: Components can subscribe to specific parts of the global state using `useContext`.
-
-- **Updating**: To modify global state, make use of a "reducer" or actions that the `dispatch` function sends to the state management system.
-
-  ```jsx
-  import { useReducer, useContext } from 'react';
-
-  // Define an action
-  const INCREMENT = 'increment';
-
-  // Define a reducer
-  const reducer = (state, action) => {
-    switch (action.type) {
-      case INCREMENT:
-        return { ...state, count: state.count + 1 };
-      default:
-        return state;
-    }
-  };
-
-  // Within component
-  const MyComponent = () => {
-    const { state, dispatch } = useContext(MyContext);
-    dispatch({ type: INCREMENT });
-  };
-  ```
-
-### External State Management
-
-- **State Declaration**: Use external libraries like **Redux**.
-
-- **Selecting**: Components can subscribe to parts of the global state via `connect` or `useSelector`.
-
-- **Updating**: Trigger changes using `dispatch` or action creators.
-
-### Shared State Management
-
-- **State Declaration**: Also facilitated by the "Context" API or libraries like **Redux**.
-
-- **Updating**: Components interact with the shared state as per the framework's methodology, be it by using `dispatch` in **Redux** or other means.
-
-- **Keeping Components in Sync**: This is automatically handled by the framework.
-
-### Best Practices
-
-- **Granularity of State**: Prefer local state whenever state is limited to a single component. Global and external state management should be reserved for state shared across multiple components.
-
-- **Consistency**: Adhere to a consistent state management approach throughout the application to minimize complexity.
-
-- **Minimizing Storage**: Avoid duplicative storage of state where local state can serve the purpose.
-<br>
-
-## 9. What are _props_ in _React Native_ and how are they used?
-
-**Props** (short for "properties") enable unidirectional data flow in React and are essential for building reusable **React Native components**.
-
-Props provide a mechanism for passing data from a parent to a child, allowing for customization and dynamic behavior. They are immutable and help to keep components self-contained, making it easier to manage and maintain a React Native application.
-
-### Key Concepts
-
-- **Unidirectional Data Flow**: Props serve as a one-way street for data, originating in a parent component and flowing down to child components.
-- **Read-Only**: Once defined, props are not meant to be modified by the receiving component.
-- **Default Values**: You can define default values for props to ensure smooth handling.
-
-### Guiding Principles
-
-- **Single Source of Truth**: Emphasizes a centralized role for data, making it clearer to identify the information's origination point.
-- **Separation of Concerns**: By restricting the scope in which components can influence one another, application logic becomes more compartmentalized and easier to manage.
-
-### Prop Types
-
-- **Required Props**: Ensures that specific props are provided. If a required prop is missing, React will issue a warning (in development mode).
-- **Data Types**: Prop types can be specialized (e.g., string, number, or function) to enforce type coherency, contributing to better code reliability and predictability.
-- **Shape and Arrays**: For more complex data structures, such as objects with specific shapes and arrays, you can define even more intricate prop type requirements.
-
-### Code Example: Simple "Weather Card" Component
-
-```jsx
-// WeatherCard.js
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Text, View, Image } from 'react-native';
-
-const WeatherCard = ({ temperature, humidity, icon }) => {
-  return (
-    <View>
-      <Text>{`Temperature: ${temperature}`}</Text>
-      <Text>{`Humidity: ${humidity}`}</Text>
-      <Image source={icon} />
-    </View>
-  );
-};
-
-WeatherCard.propTypes = {
-  temperature: PropTypes.number.isRequired,
-  humidity: PropTypes.number.isRequired,
-  icon: PropTypes.shape({
-    uri: PropTypes.string,
-  }).isRequired,
-};
-
-export default WeatherCard;
-```
-
-In the above example, `WeatherCard` accepts three props: `temperature`, `humidity`, and `icon`. Each of these props is essential for the card to accurately depict current weather conditions. Each **prop has a designated prop type**, ensuring that the received values match specific criteria.
-<br>
-
-## 10. What is the significance of the _Flexbox_ layout in _React Native_?
-
-Let's look at the unique implementations and advantages of **Flexbox** within **React Native**.
-
-### Components Designed for Flexbox
-
-React Native provides specific components empowered by Flexbox, including:
-
-1. **Container Components**: These are Views and Touchables that house inner elements being placed using Flexbox.
-
-2. **Content Components**: These are core layout components that handle the arrangement of inner items. Examples include the Text component.
-
-### Core Flexbox Components
-
-1. **View**: The foundation of Flexbox layout in React Native
-
-2. **Text**: A specialized View primarily for text-related elements that supports Flexbox
-
-3. **Image**: A Flexbox-capable View for image elements
-
-4. **ScrollView**: A container for components that are larger than its size, offering various scrolling methods. It uses Flexbox to arrange these scrollable components.
-
-5. **FlatList** and **SectionList**: These specialized components efficiently render large lists and areas as per the screen's dimensions, leveraging the innate performance of the native interface.
-
-6. **VirtualizedList**: A low-level, high-performance list. Both FlatList and SectionList are built on top of VirtualizedList.
-
-### Flexbox Properties in React Native
-
-1. **Direction**: Establishes the principal axis of the layout. Options are `row` and `column`, with the latter being the default.
-
-2. **Alignment**: Determines the position of items along the secondary axis. Common settings include `flex-start`, `center`, and `flex-end`. The setting `stretch` is also available, which extends the components to fill the empty space.
-
-3. **Order**: Flexbox allows for reordering of elements. This property defines the display order, **with the default being 0**. 
-
-4. **Proportional Sizing**: Rather than specifying explicit dimensions, items can be sized proportionally to the remaining space, making the layout adaptable to various screen sizes.
-
-5. **Gutters**: Flexbox in React Native can handle gutters between items effortlessly.
-
-### Code Example: Flex Direction
-
-Here is the JavaScript code:
-
-```javascript
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <View style={styles.box} />
-      <View style={styles.box} />
-      <View style={styles.box} />
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-  },
-  box: {
-    width: 50,
-    height: 50,
-    backgroundColor: 'lightgrey',
-  },
-});
-```
-
-In this example, the three boxes are displayed side by side due to `flexDirection: 'row'`. Their alignment is managed by `justifyContent` and `alignItems`.
-
-React Native primarily focuses on the core concepts and properties of Flexbox, offering a simplified and intuitive experience for developers.
-<br>
-
-## 11. How do you debug a _React Native application_?
-
-Debugging in React Native involves both traditional debugging methods and those specific to the platform. Here are the strategies and tools to streamline the debugging process.
-
-### Debugging Strategies
-
-- **Use DevTools**: These browser-based tools let you inspect and modify the DOM, examine network activity, and monitor console logs, among other features.
-
-- **Leverage Emulators/Simulators**: Virtual device environments can be invaluable for replicating and debugging issues across a range of device types.
-
-- **Physical Testing**: Testing on actual devices is vital for identifying device-specific bugs. Use USB debugging for a direct connection to the development machine.
-
-- **Watch Out for Undefined Behaviors**: JavaScript doesn't throw errors when accessing properties or methods of `null` or `undefined`. Check for unexpected `undefined` values using defensive patterns, like short-circuit evaluation or optional chaining.
-
-- **Separate and Simplify Issues**: If you're dealing with a complex issue, break it down into bite-sized problems. Simplify the problem domain to understand the root cause. Use binary search principles to isolate issues methodically.
-
-- **Test Isolation**: Confirm whether the bug is reproducible in a fresh environment. Temporarily remove certain components or functionality to see how it affects the bug.
-
-- **Incremental Building**: After making a change, observe if the problem resolves or worsens.
-
-- **Versatile Console Logging**: Consider using `console.assert` for conditional logs, `console.info` for informational messages, `console.warn` for potential issues, and `console.error` for errors.
-
-- **Component-Specific Debugging**: Use `ReactDOM.findDOMNode` to fetch a component's DOM representation.
-
-- **Debug in Multiple Environments**: It might be helpful to test your app in both dev and production modes.
-
-### Tools for Debugging
-
-1. **React DevTools**: Browser extensions like Chrome DevTools or standalone applications facilitate inspection of React component trees, context, and hooks.
-
-2. **Flipper**: This is a debugging tool for mobile apps on iOS, Android, and React Native. It offers a pluggable architecture that allows developers to build custom integrations.
-
-3. **Expo**: The `expo-dev-client` package provides a powerful testing environment. It's useful when working in managed Expo projects.
-
-4. **Redux DevTools**: For an app integrated with Redux, this tool offers essential features such as time-travel debugging.
-
-5. **Network Inspectors**: Both Chrome DevTools and Safari's Web Inspector offer detailed network activity insights.
-
-6. **Profiling and Performance Tools**: Use React DevTools for profiling and diving deep into performance metrics.
-
-7. **Remote Debugging**: Chrome and Safari offer remote debugging tools. For example, with Chrome, you can inspect the WebView used by your app.
-
-8. **React Native Debugger**: This application bundles Chrome DevTools, the React DevTools, and a JavaScript VM.
-
-9. **Code Linters**: Integrate linters like ESLint or TypeScript with your editor or development environment to catch potential source code issues.
-
-10. **HMR (Hot Module Replacement)**: HMR ensures that your app remains in the current state whenever you make changes, reducing the need for constant refreshes.
-
-11. **Third-Party Services**: Incorporate third-party services for bug tracking, crash reporting, and in-app user feedback.
-
-12. **Continuous Integration and Continuous Deployment (CI/CD) Tools**: Platforms like Bitrise or CircleCI offer extensive pipelines for automation, testing, and deployment.
-<br>
-
-## 12. Explain the concept of _hot reloading_ in _React Native_.
-
-**Hot Reloading** innovatively speeds up the development process by rendering updates to the running app in real-time. While preserving the app's current state, it allows developers to observe changes in layout, live.
-
-### Key Benefits
-
-- **Enhanced Productivity**: Avoiding repetitive recompilations and reinstalls.
-- **Quick Updates**: View real-time changes with contextual data.
-- **Error Localization**: Identify issues when and where they occur.
-
-### Mechanism
-
-- **State Retention**: Unlike a full reload, hot reloading keeps the app's state intact.
-- **Partial Update**: Only files that have been changed are updated, reducing the time needed.
-
-### Code Example: Enabling Hot Reloading
-
-In `App.js`, activate hot reloading with a few simple changes:
-
-```js
-if (__DEV__) {
-    const { activateKeepAwake } = require('expo-keep-awake');
-    activateKeepAwake();
-}
-```
-<br>
-
-## 13. How do you handle user input in _React Native_?
-
-**React Native** comprises several components tailored to user interaction and input processing for both iOS and Android platforms.
-
-### Core Input Components
-
-#### Text Input
-
-The most basic input component, `TextInput`, caters to single- and multi-line text input needs. It provides options for simple text, password fields, and more.
-
-#### Example: Basic `TextInput`
-
-Here is the React Native code:
-
-```react
-<TextInput placeholder="Enter your name" />
-```
-
-#### Input Fields with Auto-Complete
-
-`TextInput` leverages `autoCompleteType` to blend with both platforms' keyboard suggestions.
-
-If a user has previously entered data in the same field, the keyboard might suggest this data. On some platforms, this will include email address suggestions.
-
-Choose one of the following:
-- `off`: No auto-completion.
-- `username`: Auto-completion for usernames.
-- `password`: Secure auto-completion for passwords.
-- `email`: Auto-completion for email addresses.
-
-For example:
-
-```react
-<TextInput
-  placeholder="Enter your email"
-  autoCompleteType="email"
-/>
-```
-
-### Discrete options with Picker
-
-For small sets of options, `Picker` macOS. Picker is the component that iOS makes available that allows for single option selection (much like a dropdown).
-
-- `selectedValue`: The currently selected value.
-- `onValueChange`: The event triggered when a different value is selected.
-
-The iOS code is as follows:
-
-```react
-<Picker
-  selectedValue={selectedValue}
-  onValueChange={(itemValue, itemIndex) =>
-    setSelectedValue(itemValue)
-  }
->
-  <Picker.Item label="Java" value="java" />
-  <Picker.Item label="JavaScript" value="js" />
-</Picker>
-```
-
-The android code is like:
-
-```react
-<Picker
-  selectedValue={selectedValue}
-  onValueChange={(itemValue, itemIndex) =>
-    setSelectedValue(itemValue)
-  }
->
-  <Picker.Item label="Java" value="java" />
-  <Picker.Item label="JavaScript" value="js" />
-</Picker>
-```
-
-#### Text Areas for Multi-Line Input
-
-`TextArea` offers a multi-line text input field.
-
-Here is the React Native code:
-
-```react
-<TextArea placeholder="Type your message" />
-```
-<br>
-
-## 14. What is a `TouchableHighlight` in _React Native_?
-
-`TouchableHighlight` is a **React Native** component optimized for touch interactions. It uses the platform's native feedback effect when touched, making it ideal for buttons, tabs, or other interactive elements.
-
-### Key Features
-
-- **Accessibility**: It automatically handles accessibility states such as focus and press, adhering to **WAI-ARIA** and native mobile accessibility guidelines.
-
-- **Visual Feedback**: Upon touch, it provides a visual indication like opacity changes or highlighting, depending on the platform.
-
-- **On Press Event**: Executes a function when the component is pressed or activated using keyboard or assistive devices.
-
-### Code Example: `TouchableHighlight`
-
-Here is the React Native code:
-
-```jsx
-
-import { TouchableHighlight, Text, View } from 'react-native';
-
-const CustomButton = ({ label }) => (
-  <TouchableHighlight
-    style={{ backgroundColor: 'green', padding: 10, margin: 10, borderRadius: 5 }}
-    underlayColor="lime"
-    onPress={() => alert('Button pressed!')}
-  >
-    <Text style={{ color: 'white' }}>{label}</Text>
-  </TouchableHighlight>
-);
-
-const App = () => (
-  <View>
-    <CustomButton label="Press me!" />
-  </View>
-);
-
-```
-<br>
-
-## 15. Describe the _View_ component and its purpose in _React Native_.
-
-**View** in React Native functions similarly to a `<div>` in web development and allows for  **style definitions**.
-
-### Core Benefits
-
-- **Layout Flexibility**: Optimizes for different screen sizes and orientations.
-- **Style Configuration**: Streamlines style organization and replication.
-
-### Primary Use-Cases
-
-1. **Structural Containers**: Serve as building blocks for organizing UI elements.
-
-2. **Standalone Components**: When you need an element that can be styled or requires touch interaction.
-
-3. **Adaptive Design**: Design dynamic layouts that accommodate various device types and orientations.
-
-4. **Styling**: Apply shared styles to multiple child components.
-
-### Common Misconceptions
-
-#### 1. View Doesn't Represent Visual Elements
-
-While **View** forms the basic unit for layout and styling, it doesn't intrinsically display any content, nor is it scrollable. Within **View**, you incorporate **Text** and other components for visual representation.
-
-#### 2. View Doesn't Guarantee a Unique End-Component
-
-Despite being fundamental for rendering, **View** might not directly translate to a distinct UI component. The internal view system structures UI arrangements. Accessibility and debug tools in React Native App recognize and isolate View components. This distinction is crucial for device adaptation and adopting universal design principles.
-
-### Best Practices
-
-- **Organized Nesting**: Maintain clarity by thoughtfully nesting components.
-- **Styling Economics**: Leverage shared styles to minimize redundancy and ensure a consistent look throughout the app.
-- **Accessibility**: Maintain good accessibility by including visual aid for differently-abled users.
-- **Refactoring**: Regularly reevaluate your design choices and refactor as needed.
-<br>
-
-
-
-#### Explore all 100 answers here 👉 [Devinterview.io - React Native](https://devinterview.io/questions/web-and-mobile-development/react-native-interview-questions)
-
-<br>
-
-<a href="https://devinterview.io/questions/web-and-mobile-development/">
-<img src="https://firebasestorage.googleapis.com/v0/b/dev-stack-app.appspot.com/o/github-blog-img%2Fweb-and-mobile-development-github-img.jpg?alt=media&token=1b5eeecc-c9fb-49f5-9e03-50cf2e309555" alt="web-and-mobile-development" width="100%">
-</a>
-</p>
-
-Guruprasad
-
-# React Native Interview Questions and Answers
-
-## Table of Contents
-
-| No. | Questions                                                                                                    |
-| --- | ------------------------------------------------------------------------------------------------------------ |
-| 1   | [What is React Native?](#what-is-react-native)                                                               |
-| 2   | [Why use React Native?](#why-use-react-native)                                                               |
-| 3   | [What are the advantages of React Native?](#what-are-the-advantages-of-react-native)                         |
-| 4   | [List the essential components of React Native.](#list-the-essential-components-of-react-native)             |
-| 5   | [What are the cons of React Native?](#what-are-the-cones-of-react-native)                                    |
-| 6   | [How many threads run in React Native?](#how-many-threads-run-in-react-native)                               |
-| 7   | [What are props in React Native?](#what-are-props-in-react-native)                                           |
-| 8   | [What are React Native Apps?](#what-are-react-native-apps)                                                   |
-| 9   | [List the users of React Native.](#list-the-users-of-react-native)                                           |
-| 10  | [For what purpose is XHR module used in React Native?](#for-what-purpose-is-xhr-module-used-in-react-native) |
-| 11 | [Can we use Native code alongside React Native?](#can-we-use-native-code-alongside-react-native) |
-| 12 | [Are React Native built-in mobile apps like other Hybrid Apps which are slower in actual than Native ones?](#are=react-native-built-in-mobile-apps-like-other-hybrid-apps-which-are-slower-in-actual-than-native-ones?) |
-| 13 | [What is the difference between React and React Native?](#what-is-the-difference-between-react-and-react-native) |
-| 14 | [What is the difference between React Native and Native Script?](#what-is-the-difference-between-react-native-and-native-script) |
-| 15 | [Can we combine native codes of Android and iOS in React Native?](#can-we-combine-native-codes-of-android-and-ios-in-react-native) |
-| 16 | [What is the point of StyleSheet.create() in react native? What are the tradeoffs with this approach?](#what-is-the-point-of-stylesheet.create()-in-react-native-what-are-the-tradeoffs-with-this-approach) |
-| 17 | [Why React Native has very clear animations?](#why-react-native-has-very-clear-animations) |
-| 18 | [Differentiate between the React component and the React element.](#differentiate-between-the-react-component-and-the-react-element) |
-| 19 | [Why React Native use Redux?](#why-react-native-use-redux) |
-| 20 | [Which node_modules will run in React Native? How to test for this?](#which-node-modules-will-run-in-react-native-howto-test-for-this) |
-| 21 | [What is Virtual DOM and how it works in React Native?](#what-is-virtual-dom-and-how-it-works-in-react-native) |
-| 22 | [What is InteractionManager and what is its importance?](#what-is-interactionmanager-and-what-is-its-importance) |
-| 23 | [What is the point of the relationship between React Native and React?](#) |
-| 24 | [What are the similarities between React Native and React?](#) |
-| 25 | [Describe HOC.](#) |
-| 26 | [Define Native apps.](#) |
-| 27 | [What are Hybrid Apps?](#) |
-| 28 | [What are refs in React? When to use Refs?](#) |
-| 29 | [What does a react native packager do?](#) |
-| 30 | [What is NPM in React Native?](#) |
-| 31 | [What are “props” and “state”?](#) |
-| 32 | [What is Style?](#) |
-| 33 | [How To Handle Multiple Platforms?](#) |
-| 34 | [When would you use a class component over a functional component?](#) |
-| 35 | [How React Native handle different screen size?](#) |
-| 36 | [Are all React components usable in React Native?](#) |
-| 37 | [What is the challenge with React Native?](#) |
-| 38 | [Does React Native use the same code base for Android and iOS?](#) |
-| 39 | [Thus React Native is a native Mobile App?](#) |
-| 40 | [What is Gesture Responder System?](#) |
-| 41 | [How can React Native integrate more features on the existing app?](#) |
-| 42 | [What is the storage system in React Native?](#) |
-| 43 | [How React Native load data from server?](#) |
-| 44 | [Are compile-to-JS libraries like TypeScript or ClojureScript compatible with React Native? Why or why not?](#) |
-| 45 | [What is wrong with this code for querying a native API?](#) |
-| 46 | [Imagine you have an app which is a series of lists of images (e.g. like Instagram). The app seems to crash at random. What steps can we take to investigate and mitigate this in React Native?](#) |
-| 47 | [Native apps that feel smooth often incorporate lots of little animations for state changes and transitions. How would you implement these behaviors?](#) |
-| 48 | [What Is The Difference Between Using Constructor Vs Getinitialstate In React / React Native?](#) |
-| 49 | [What Happens When You Call Setstate?](#) |
-| 50 | [What Are Keys In React And Why Are They Important?](#) |
-| 51 | [What Is The Second Argument That Can Optionally Be Passed To Setstate And What Is Its Purpose?](#) |
-
-
-1. ### What is React Native?
-
-    React native is an open-source JavaScript framework designed by Facebook for native mobile applications development. It is based on a JavaScript library-React.
-    
-    React Native saves your development time as it enables you to build real and native mobile apps within a single language – JavaScript for both Android and iOS platforms, such that code once, run that on any platform, and the React Native App is ready for use with native look and feel.
-
-2. ### Why use React Native?
-
-    There is the following list of React Native features behind its use:
-    - Easy to use.
-    - Open-source framework
-    - Cross-platform compatibility
-    - Code Sharing
-    - Use a common language – JavaScript for cross-platform development.
-    - Faster Development
-    - Saves Time and efforts
-    - Gives Native look and feel
-
-3. ### What are the advantages of React Native?
-
-    - React Native is based on “Learn Once Write Everywhere” approach to equip developers with a tool that only needs to be learned once, just in a single language and then can be reused on both iOS and Android mobile platform.
-    - React Native offers **cross-platform development** and a real experience to developers allowing them to build only one app with effectively 70% code sharing between different platforms.
-    - React Native helps in **faster development.** Building one app instead of two using a common language gives speedier app deployment, delivery, and quicker time-to-market.
-    - React Native exists with **essential components** for ending of native apps as the app development ends with native look and feel.
-    - React Native has a **large community** of developers for its security. The developers are always ready to fix bugs and issues that occur at any instant. They improve the performance of React Native from time to time with the best practices possible.
-    - React Native supports **Live and Hot Reloading.** Both are different features. Live Reloading is a tool that helps in compiling and reading the modified files. Hot Reloading is based on HMR (Hot Module Replacement) and helps to display the updated UI content.
-
-4. ### List the essential components of React Native.
-
-    These are the following essential components of React Native:
-
-    - View is the basic built-in component used to build UI.
-    - Text component displays text in the app.
-    - Image component displays images in the app.
-    - TextInput is used to input text into the app via the keypad.
-    - ScrollView is a scrolling container used to host multiple views.
-
-5. ### What are the cons of React Native?
-
-    - React Native is still a new development platform as compared to iOS and Android platforms. It is still immature, i.e., in an improvement stage and impacting negatively on apps.
-    - Sometimes, React Native built-in apps face performance problem if there is a requirement of advanced functionality. In that case, they don’t perform well as compared to native apps.
-    - React Native has a steep learning curve for an average learner as it is not more comfortable in comparison to other cross-platform apps. It is because of existing JSX (JavaScript Syntax extension) in which HTML and JavaScript get combined and make learning challenging for average ones.
-    - React Native is based on JavaScript library which is fragile and creates a gap in the security robustness. As an expert’s point of view, React Native is not secure and robust for building highly confidential data apps like Banking and Financial apps.
-
-6. ### How many threads run in React Native?
-
-    There are two threads run in React Native:
-
-    - JavaScript thread
-    - Main UI thread
-
-7. ### What are props in React Native?
-
-    props pronounced as the properties of React Native Components. props are the immutable parameters passed in Presentational Component to provide data.
-
-8. ### What are React Native Apps?
-
-    React Native Apps are not web apps; they are the real and native mobile applications built-in a single language with the native components to run on mobile devices.
-
-9. ### List the users of React Native.
-
-    There are thousands of React Native built-in apps. Here is the list of those apps:
-
-    - Facebook
-    - Facebook Ads Manager
-    - Instagram
-    - F8
-    - Airbnb
-    - Skype
-    - Tesla
-    - Bloomberg
-    - Gyroscope
-    - Myntra
-    - UberEats
-
-10. ### For what purpose is XHR module used in React Native?
-
-    XHR module implements XMLHttpRequest to post data on the server.
-
-11. ### Can we use Native code alongside React Native?
-
-    Yes, we can use a native code alongside React Native for task completion, and several limitations can also overcome in previous versions like Titanium.
-
-12. ### Are React Native built-in mobile apps like other Hybrid Apps which are slower in actual than Native ones?
-
-    React Native designed as a highly-optimized performance-based framework that builds real mobile apps with native components. Facebook is the best-suited example of high performance based app built-in React Native.
-
-13. ### What is the difference between React and React Native?
-
-    - React is a JavaScript library while React native is a framework based on React.
-    - js is used for building UI and web applications while React Native is used for creating cross-platform native mobile apps.
-    - Both uses synonymous tags such as `<div> <h1> <h2>` are the tags in React.js and `<View> <Text>` are the tags in React native.
-    - js uses DOM for path rendering of HTML tags while React Native uses AppRegistry for app registration.
-
-14. ### What is the difference between React Native and Native Script?
-
-    - React Native uses only a single core development language- JavaScript while Native Script can use any of these languages- Angular, Vuejs, TypeScript, and JavaScript.
-    - React Native has faster development speed than Native Script. React Native exists with reusable components that developed at once can be used at different mobile platforms and accelerates mobile app development while Native Script exists with a less number of plugins among which some pass improper verification.
-    - React Native performs high as compared to Native Script. React Native is React based and uses virtual Dom for faster UI updation while Native Script uses slower Angulas, Vuejs, and TypeScript.
-    - Native Script exists with a box of various themes that shorten the gap between the different platform UIs while React Native doesn’t live with predefined themes; you get default look and feel by the devices.
-
-15. ### Can we combine native codes of Android and iOS in React Native?
-
-    Yes, we can do this as React Native fluently combines the components of both iOS and Android written in Swift/ Objective-C or Java.
-
-16. ### What is the point of StyleSheet.create() in react native? What are the tradeoffs with this approach?
-
-    In React Native, StyleSheet.create() send the style only once through the bridge to avoid passing new style object and ensures that values are immutable and opaque.
-
-    The key tradeoff with this method is that recomputing styles based on external criteria (like screen rotation or even a user-selected viewing mode) needs some infrastructure built to determine which styles to use. If objects were passed in “raw” they could be recomputed on the fly every time, based on arbitrary criteria.
-
-17. ### Why React Native has very clear animations?
-
-    The animated API of React Native was designed as serializable so that users can send animations to native without going through the bridge on every frame. Once the animation starts, a JS thread can be blocked, and the animations will still run fluently. As the code converted into native views before rendering, the animations in React native will run smoothly, and the users get bright animations.
-
-    Certain animation types, like `Animation.timing` and `Animation.spring`, can be serialized and sent across the asynchronous bridge before they are executed. This allows the runtime to defer the actual drawing of the animation entirely to the native side, instead of trying to send positional values across the bridge as each frame is rendered. This does not work with animations that are not computable ahead of time. For example:
-    ```
-    Animated.timing(new Animated.Value(0), {
-        useNativeDriver: true,
-        toValue: 100,
-        duration: 100
-    }).start()
-    ```
-    This will serialize the operation and send it to the native side before starting it.
-
-18. ### Differentiate between the React component and the React element.
-
-    React component is a class or function that accepts input and returns a React element while React element displays the look of React Component Instance to be created.
-
-19. ### Why React Native use Redux?
-
-    Redux is a standalone state management library that React Native use to simplify data flow within an app.
-
-20. ### Which node_modules will run in React Native? How to test for this?
-
-    In React Native, node_modules as any pure JavaScript library that does not rely on Node.js runtime modules, and does not rely on web-specific concepts like `window.location.pathname` will run fine. But be conscious as there exists no way to test for this with Babel- it doesn’t scan these libraries for offending dependencies. A module that uses `window.location.pathname` may fail at runtime in a different unexpected place.
-
-21. ### What is Virtual DOM and how it works in React Native?
-
-    Virtual Dom is an in-memory tree representation of the real DOM with lightweight elements. It provides a declarative way of DOM representation for an app and allows to update UI whenever the state changes.
-    
-    **Working** :
-    
-    Virtual DOM lists elements and their attributes and content. It renders the entire UI whenever any underlying data changes in React Native. Due to which React differentiates it with the previous DOM and a real DOM gets updated.
-
-22. ### What is InteractionManager and what is its importance?
-
-    InteractionManager is a native module in React native that defers the execution of a function until an “interaction” finished.
-
-     We can call `InteractionManager.runAfterInteractions(() => {...})` to handle this deferral. We can also register our own interactions.
-
-    **Importance** React Native has JavaScript UI thread as the only thread for making UI updates that can be overloaded and drop frames. In that case, InteractionManager helps by ensuring that the function is only executed after the animations occurred.
-
-23. ### What is the point of the relationship between React Native and React?
-
-    React is a JavaScript library. React Native is a framework based on React that use JavaScript for building mobile applications. It uses React to construct its application UI and to define application business logic. React updates a real DOM by tree diffing and allows React Native to work. It implements a bridge that allows the JavaScript runtime to communicate asynchronously with the native runtime.
-
-24. ### What are the similarities between React Native and React?
-
-    React.js and React Native share
-
-    - same lifecycle methods like componentDidMount
-    - same state and prop variables
-    - same component architecture
-    - similar management libraries like Redux
-
-25. ### Describe HOC.
-
-    HOC (High Order Components) in React is the functional programming methodology for reusing component logic.
-
-    - takes a component as an argument and
-    - returns a new component
-
-    It is a pattern evolved from React’s compositional nature to decompose the logic into simpler and smaller reusable functions.
-
-26. ### Define Native apps.
-
-    Native app is a software program for a specific mobile device that is developed on a particular platform in a specific programming language like Objective-C/Swift for iOS and Java for Android. It can use device-specific hardware and software as built on a particular device and its OS. It uses the latest technology such as GPS and provides optimized performance.
-
-27. ### What are Hybrid Apps?
-
-    Hybrid applications are the web applications developed through HTML, CSS, JavaScript web standards and wrapped in a native container using a mobile WebView object. These apps are easier to maintain.
-
-28. ### What are refs in React? When to use Refs?
-
-    Refs are escape hatch that provides a direct way to access DOM nodes or React elements created in the render method.
-
-    Refs get in use when
-
-    - To manage focus, text selection, or media playback
-    - To trigger imperative animations
-    - To integrate with third-party DOM libraries
-
-    In order to use them you add a ref attribute to your component whose value is a callback function which will receive the underlying DOM element or the mounted instance of the component as its first argument.
-    
-    ```
-    class UnControlledForm extends Component {
-        handleSubmit = () => {
-            console.log("Input Value: ", this.input.value)
-    }
-    render () {
-        return (
-            <form onSubmit={this.handleSubmit}>
-                <input
-                type='text'
-                ref={(input) => this.input = input} />
-                <button type='submit'>Submit</button>
-            </form>
-            )
-        }
-    }
-    ```
-
-    Above notice that our input field has a ref attribute whose value is a function. That function receives the actual DOM element of input which we then put on the instance in order to have access to it inside of the handleSubmit function.
-
-    It’s often misconstrued that you need to use a class component in order to use refs, but refs can also be used with functional components by leveraging closures in JavaScript.
-
-    ```
-    function CustomForm ({handleSubmit}) {
-        let inputElement
-        return (
-            <form onSubmit={() => handleSubmit(inputElement.value)}>
-            <input
-                type='text'
-                ref={(input) => inputElement = input} />
-            <button type='submit'>Submit</button>
-            </form>
-        )
-    }
-    ```
-
-29. ### What does a react native packager do?
-
-    A react native packager does a few things:
-
-    - It combines all JavaScript code into a single file
-    - It translates any JavaScript code that your device don’t understand (e.g., JSX or some of the newer JS syntax)
-    - It converts assets like PNG files into objects that can be displayed by an Image
-
-30. ### What is NPM in React Native?
-
-    npm installs the command line interface in React Native.
-
-    `npm install -g react-native-cli`
-
-31. ### What are “props” and “state”?
-
-    **“Props”** and **“state”** are both plain JavaScript objects used to control data inside the components.
-
-    > props :
-    - short for “properties.”
-    - Immutable parameters -> Unchangeable inside the component.
-    - Set by their parent and fixed for the whole lifetime of a component.
-    - Get passed to the Presentational component.
-
-    > state :
-    - Mutable parameters -> Changeable inside the component.
-    - Get handled within the container component.
-    - Can’t be accessed and modified outside the component.
-
-32. ### What is Style?
-
-    The style prop is a plain JavaScript object use to making style of React Native application. There are two ways to style your element in React Native application.
-
-    - **style** property: adds styles inline.
-    - external **Stylesheet**: enables us to write concise code.
-
-33. ### How To Handle Multiple Platforms?
-
-    React Native smoothly handles multiple platforms. The large numbers of the React Native APIs are cross-platform so that one React Native component will work seamlessly on both iOS and Android. It provides the ways using which you can easily organize your code and separate it by platform:
-
-    - Platform module to detect the platform in which the app is running and
-    - platform-specific file extensions to load the relevant platform file.
-    
-    Facebook, the creator of React native, claims that the Ad Manager application has 87% code reuse across these two platforms
-
-34. ### When would you use a class component over a functional component?
-
-    We use class component if our component has state or a lifecycle method(s). Otherwise, we use a Functional component.
-
-35. ### How React Native handle different screen size?
-
-    React Native offers many ways to handle different screen sizes:
-
-    - **Flexbox** is designed to provide a consistent layout on different screen sizes. It offers three main properties:
-      - flexDirection
-      - justifyContent
-      - alignItems
-    - **Pixel Ratio** exists in the official documentation with the definition such that we can get access to the device pixel density by using PixelRatio class. We will get a higher resolution image if we are on a high pixel density device. An ethical principle is that multiply the size of the image we display by the pixel ratio.
-    - **Dimensions** easily handle different screen sizes and style the page precisely. It needs to write the code only once for working on any device.
-
-36. ### Are all React components usable in React Native?
-
-    Web React components use DOM elements to display (ex. div, h1, table, etc.), but React Native does not support these. We will need to find libraries/components made specifically for React Native.
-    
-    But today React is focusing on components that can be shared between the web version of React and React Native. This concept has been formalized since React v0.14.
-
-37. ### What is the challenge with React Native?
-
-    Working across separate Android and iOS codebases is challenging.
-
-38. ### Does React Native use the same code base for Android and iOS?
-
-    Yes, React Native uses the same code base for Android and IOS. React takes cares of the native components translations.
-    
-    For example : A React Native ScrollView uses native ScrollView on Android and UiScrollView on iOS.
-
-39. ### Thus React Native is a native Mobile App?
-
-    Yes, React Native compiles a native mobile app using native app components. React Native builds a real mobile app that is indistinguishable from an app built using Objective-C or Java.
-
-40. ### What is Gesture Responder System?
-
-    The gesture responder system manages the lifecycle of gestures in the app.
-    
-    Users interact with mobile apps mainly through touch. They can use a combination of gestures, such as tapping on a button, zooming on a map, sliding on a widget or scrolling a list. The touch responder system is required to allow components to negotiate these touch interactions without any additional knowledge of their parent or child components.
-
-41. ### How can React Native integrate more features on the existing app?
-
-    React Native is great to start a new application from scratch. However, React Native works well to add new features to an existing native app. It needs some steps to add new React Native based features, screen, views, etc. The specific steps are different for different platform you’re targeting.
-
-    - Set up directory structure.
-    - Install JavaScript dependencies.
-    - Configuring permissions.
-    - Code integration.
-    - Test your integration.
-
-42. ### What is the storage system in React Native?
-
-    React Native uses **AsyncStorage** class to store data in key-value pair which is global to all app. AsyncStorage is a JavaScript code which is a simple, unencrypted, asynchronous and persistent. React Native also uses separate files for iOS and RocksBD or SQLite for Android.
-    
-    Using AsyncStorage class, you must have a data backup, and synchronization classes as data saved on the device is not permanent and not encrypted.
-
-43. ### How React Native load data from server?
-
-    React Native provides the **Fetch API** which deals networking needs. React Native uses componentDidMount lifecycle method to load the data from server.
-
-    `fetch('https://mywebsite.com/mydata.json')`
-
-    Other Networking libraries which interact with server are:
-
-    - XMLHttpRequest API
-    - WebSockets
-
-44. ### Are compile-to-JS libraries like TypeScript or ClojureScript compatible with React Native? Why or why not?
-
-    Languages that compile to JavaScript are generally compatible with React Native. React Native uses Babel to transform JavaScript into a form that is consumable by the native OS’s JavaScript runtime, using the `react-native` Babel plugin. As long as Babel can compile your JavaScript, and your code does not rely on web- or Node.js-specific dependencies, it will run in React Native.
-
-45. ### What is wrong with this code for querying a native API?
-    ```
-    class GyroJs {
-        setGyroPosition(pos) {
-            if (pos === null || typeof pos === 'undefined') {
-                throw new Error('The position must be defined');
-            }
-            this.pos = pos;
-        }
-        constructor() {
-            const gyroscopePosition = NativeModules.MyGyroModule.gyroPosition();
-            this.setGyroPosition(gyroscopePosition);
-        }
-    }
-    ```
-    This code will always throw an error because the value of `gyroscopePosition` will always be an unresolved `Promise`. It’s important to remember that the bridge that connects JavaScript and native code is asynchronous. We can either receive results from this side by passing in a callback (not done in this example), or by returning a `Promise`. In this case, we need to append a `then()` call to the `gyroPosition()` call and set the position inside it.
-
-46. ### Imagine you have an app which is a series of lists of images (e.g. like Instagram). The app seems to crash at random. What steps can we take to investigate and mitigate this in React Native?
-
-    Often, and especially on the Android platform, lists of images are not properly recycled when scrolling. Their memory is never garbage collected, nor is it manually freed at a lower level. This leads to out-of-memory (OOM) crashes that can occur seemingly at random as the app’s memory is exhausted.
-
-    We can investigate this by profiling the app’s heap memory usage in either Xcode or Android Studio. If you scroll through a list of images and notice the heap usage steadily climbing without ever dipping, it probably means that your images aren’t being recycled properly.
-
-    To mitigate this, we can check which list implementation we are using. In modern versions of React Native, `ListView` should never be used; ensure that the `FlatList` component is handling the rendering instead. If this is not sufficient after tuning, you can try making your images lower resolution.
-
-47. ### Native apps that feel smooth often incorporate lots of little animations for state changes and transitions. How would you implement these behaviors?
-    
-    React Native comes with the `Animated` API built in. This API is declarative: We define specific animations, using `Animated.timing, Animated.spring`, etc., and provide the exact parameters needed for the animation to run. This technique falls apart when we need lots of subtle and delicate animations on the fly; it’s not performant, and maintaining all that code would be a nightmare.
-
-    Instead, we look to the `LayoutAnimation` module, which is an interpolative API. We can invoke predefined `LayoutAnimations`, or define our own. `LayoutAnimation` watches changes in the positions of elements between cycles of the render loop, and computes the positional differences between elements at different cycles. Then, it interpolates those changes and produces a smooth, natively driven animation.
-
-48. ### What Is The Difference Between Using Constructor Vs Getinitialstate In React / React Native?
-    
-    The two approaches are not interchangeable. You should initialize state in the constructor when using ES6 classes, and define the getInitialState method when using React.createClass.
-
-    ```
-    class MyComponent extends React.Component {
-        constructor(props) {
-            super(props);
-            this.state = { /* initial state */ };
-        }
-    }
-    ```
-    is equivalent to
-
-    ```
-    var MyComponent = React.createClass({
-        getInitialState() {
-        return { /* initial state */ };
-        },
-    });
-    ```
-
-49. ### What Happens When You Call Setstate?
-
-    The first thing React will do when setState is called is merge the object you passed into setState into the current state of the component. This will kick off a process called reconciliation. The end goal of reconciliation is to, in the most efficient way possible, update the UI based on this new state.
-
-    To do this, React will construct a new tree of React elements (which you can think of as an object representation of your UI). Once it has this tree, in order to figure out how the UI should change in response to the new state, React will diff this new tree against the previous element tree. By doing this, React will then know the exact changes which occurred, and by knowing exactly what changes occurred, will able to minimize its footprint on the UI by only making updates where absolutely necessary.
-
-50. ### What Are Keys In React And Why Are They Important?
-
-    Keys are what help React keep track of what items have changed, been added, or been removed from a list.
-
-    ```
-    render () {
-        return (
-            <ul>
-                {this.state.todoItems.map(({task, uid}) => {
-                    return <li key={uid}>{task}</li>
-                })}
-            </ul>
-        )
-    }
-    ```
-
-    It’s important that each key be unique among siblings. We’ve talked a few times already about reconciliation and part of this reconciliation process is performing a diff of a new element tree with the most previous one. Keys make this process more efficient when dealing with lists because React can use the key on a child element to quickly know if an element is new or if it was just moved when comparing trees. And not only do keys make this process more efficient, but without keys, React can’t know which local state corresponds to which item on move. So never neglect keys when mapping.
-
-51. ### What Is The Second Argument That Can Optionally Be Passed To Setstate And What Is Its Purpose?
-
-    A callback function which will be invoked when setState has finished and the component is re-rendered.
-
-    Something that’s not spoken of a lot is that setState is asynchronous, which is why it takes in a second callback function. Typically it’s best to use another lifecycle method rather than relying on this callback function, but it’s good to know it exists.
-
-    ```
-    this.setState(
-        { username: 'tylermcginnis33' },
-        () => console.log('setState has finished and the component has re-rendered.')
-    )
-    ```
